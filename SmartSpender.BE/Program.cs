@@ -31,6 +31,8 @@ class Program
             {
                 // Ensure database is created
                 context.Database.EnsureCreated();
+
+                // 1. Create or update the Excel template file.
                 var FILE_NAME = "LLMFinance.xlsx";
                 var templateFilePath = Path.Combine(configuration.GetValue<string>("Paths:DataFilePath"), "20250812.xlsx");
                 //ExcelDataImporter excelDataImporter = new ExcelDataImporter(configuration);
@@ -38,20 +40,20 @@ class Program
                 //var templateFilePath = excelDataImporter.AppendAllFoldersToTemplate(); // Append data from all EXCEL folders to the template file
 
 
-                /// 1. Processes the Excel file to RAWDATA table.
+                /// 2. Processes the Excel file to RAWDATA table.
                 //var processor = new ExelFileDB(configuration, context, templateFilePath);
                 //processor.ProcessExcelFile();
 
 
-                // 2. find and add new busnises if needed.
+                // 3. find and add new busnises if needed.
                 //var processor = new RawDataToBusinessProcessor(configuration, context);
-                //processor.ProcessRawDataToBusiness();
+               //processor.ProcessRawDataToBusiness();
 
 
 
-                // 2. find and add categories and map them to businesses.
-                //var processor = new BusinessCategoryProcessor(configuration, context);
-                //processor.ProcessBusinessCategories();
+                // 4. find and add categories and map them to businesses.
+                var processor = new BusinessCategoryProcessor(configuration, context);
+                processor.ProcessBusinessCategories();
 
 
 
