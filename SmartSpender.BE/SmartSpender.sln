@@ -5,6 +5,10 @@ VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSpender.DataCollector", "SmartSpender.DataCollector.csproj", "{08CBCBD3-5807-4AD2-93CC-F40643854F0E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSpender.API", "SmartSpender.API\SmartSpender.API.csproj", "{6592D746-3CAF-415E-915F-CD8BAC8F1F2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSpender.API.Tests", "SmartSpender.API.Tests\SmartSpender.API.Tests.csproj", "{82148CF8-0C2A-4DCA-A05F-C2434A5203D9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{08CBCBD3-5807-4AD2-93CC-F40643854F0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08CBCBD3-5807-4AD2-93CC-F40643854F0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08CBCBD3-5807-4AD2-93CC-F40643854F0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6592D746-3CAF-415E-915F-CD8BAC8F1F2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6592D746-3CAF-415E-915F-CD8BAC8F1F2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6592D746-3CAF-415E-915F-CD8BAC8F1F2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6592D746-3CAF-415E-915F-CD8BAC8F1F2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82148CF8-0C2A-4DCA-A05F-C2434A5203D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82148CF8-0C2A-4DCA-A05F-C2434A5203D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82148CF8-0C2A-4DCA-A05F-C2434A5203D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82148CF8-0C2A-4DCA-A05F-C2434A5203D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
