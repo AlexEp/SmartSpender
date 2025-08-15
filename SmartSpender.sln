@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36401.2 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSpender.DataCollector.UI", "SmartSpender.DataCollector.UI\SmartSpender.DataCollector.UI.csproj", "{8CB5745B-D8D6-8272-6691-5D4024649574}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSpender.DataCollector", "SmartSpender.BE\SmartSpender.DataCollector.csproj", "{9A1DA9D5-3AEA-437E-D16F-77E7496E0079}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8CB5745B-D8D6-8272-6691-5D4024649574}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CB5745B-D8D6-8272-6691-5D4024649574}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CB5745B-D8D6-8272-6691-5D4024649574}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CB5745B-D8D6-8272-6691-5D4024649574}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A1DA9D5-3AEA-437E-D16F-77E7496E0079}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A1DA9D5-3AEA-437E-D16F-77E7496E0079}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A1DA9D5-3AEA-437E-D16F-77E7496E0079}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A1DA9D5-3AEA-437E-D16F-77E7496E0079}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0BF758D3-1F4D-467F-9591-A29B17977E68}
+	EndGlobalSection
+EndGlobal
