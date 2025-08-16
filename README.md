@@ -4,11 +4,11 @@ SmartSpender is a .NET application designed to help users track their expenses. 
 
 ## Project Structure
 
-The project follows a standard N-tier architecture, with three main projects:
+The project is composed of three main projects:
 
--   `SmartSpender.DAL` (Data Access Layer): This project is responsible for all database interactions. It uses Entity Framework Core to map C# entities to database tables. It also contains repositories for accessing and manipulating data.
--   `SmartSpender.BE` (Business Logic Layer): This project contains the core business logic of the application. It includes services that orchestrate data flow between the API and the DAL.
--   `SmartSpender.API`: This is an ASP.NET Core Web API project that exposes the application's functionality through a set of RESTful endpoints. It handles HTTP requests and responses, and uses the services from the `SmartSpender.BE` project to perform the requested operations.
+-   `SmartSpender.DAL` (Data Access Layer): This project is responsible for all database interactions. It uses Entity Framework Core to map C# entities to database tables. It also contains repositories and services for accessing and manipulating data.
+-   `SmartSpender.API`: This is an ASP.NET Core Web API project that exposes the application's functionality through a set of RESTful endpoints. It handles HTTP requests and responses, and uses the services from the `SmartSpender.DAL` project to perform CRUD operations.
+-   `SmartSpender.BE` (Background Service): This project is a background worker service that performs data processing tasks, such as importing data from Excel files. It runs independently of the API.
 
 ## Getting Started
 
