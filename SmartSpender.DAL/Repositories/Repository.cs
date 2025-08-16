@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using my_test.Models;
+using SmartSpender.DAL.Models;
 
 namespace SmartSpender.DAL.Repositories
 {

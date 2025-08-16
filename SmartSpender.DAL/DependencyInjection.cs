@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using my_test.Models;
+using SmartSpender.DAL.Models;
 using SmartSpender.DAL.Repositories;
 using SmartSpender.DAL.Services;
 

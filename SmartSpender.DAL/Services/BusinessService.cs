@@ -1,6 +1,6 @@
 using SmartSpender.DAL.DTOs;
 using SmartSpender.DAL.Repositories;
-using my_test.Models.Entities;
+using SmartSpender.DAL.Models.Entities;
 
 namespace SmartSpender.DAL.Services
 {
