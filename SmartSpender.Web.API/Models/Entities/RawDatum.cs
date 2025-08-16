@@ -1,7 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace SmartSpender.API.Models.Entities;
+namespace SmartSpender.Web.API.Models.Entities;
 
 public partial class RawDatum
 {

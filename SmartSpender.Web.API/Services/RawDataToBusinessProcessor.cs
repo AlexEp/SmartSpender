@@ -1,8 +1,10 @@
 using System;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
-using my_test.Models;
-using my_test.Models.Entities;
+using SmartSpender.Web.API.Models;
+using SmartSpender.Web.API.Models.Entities;
+
+namespace SmartSpender.Web.API.Services;
 
 public class RawDataToBusinessProcessor
 {

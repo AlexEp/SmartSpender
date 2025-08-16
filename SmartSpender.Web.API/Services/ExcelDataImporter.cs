@@ -5,10 +5,10 @@ using System.IO;
 using System.Linq;
 using ExcelDataReader;
 using Microsoft.Extensions.Configuration;
-using my_test.Models;
+using SmartSpender.Web.API.Models;
 using ClosedXML.Excel;
 
-namespace my_test.Services
+namespace SmartSpender.Web.API.Services
 {
     /// <summary>
     /// Service for creating and appending data to an Excel template file from multiple source folders.

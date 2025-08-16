@@ -1,4 +1,4 @@
-namespace SmartSpender.API.Tests;
+namespace SmartSpender.Web.API.Tests;
 
 public class UnitTest1
 {

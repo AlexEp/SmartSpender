@@ -4,9 +4,11 @@ using System.Data;
 using System.Linq;
 using ExcelDataReader;
 using Microsoft.Extensions.Configuration;
-using my_test.Models;
-using my_test.Models.Entities;
+using SmartSpender.Web.API.Models;
+using SmartSpender.Web.API.Models.Entities;
 using Microsoft.IdentityModel.Tokens;
+
+namespace SmartSpender.Web.API.Services;
 
 public class ExelFileDB
 {
@@ -25,7 +27,7 @@ public class ExelFileDB
     {
         _configuration = configuration;
         _context = context;
-        _excelFilePath = templateFilePath.IsNullOrEmpty() ? Path.Combine(
+        _excelFilePath = string.IsNullOrEmpty(templateFilePath) ? Path.Combine(
             _configuration.GetValue<string>("Paths:DataFilePath"),FILE_NAME ) : templateFilePath;
     }
 

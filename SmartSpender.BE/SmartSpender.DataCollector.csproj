@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -11,18 +11,18 @@
 	  <PackageReference Include="ClosedXML" Version="0.105.0" />
 	  <PackageReference Include="ExcelDataReader" Version="3.7.0" />
 	  <PackageReference Include="ExcelDataReader.DataSet" Version="3.7.0" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.20" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.20" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.20">
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0">
 	    <PrivateAssets>all</PrivateAssets>
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
-	  <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.1" />
-	  <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.1" />
-	  <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.1" />
-	  <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
-	  <PackageReference Include="System.Formats.Asn1" Version="6.0.1" />
-	  <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.1" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.0" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+	  <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+	  <PackageReference Include="System.Formats.Asn1" Version="8.0.1" />
+	  <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +34,10 @@
   <ItemGroup>
     <Folder Include="Models\DTOs\" />
     <Folder Include="github\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SmartSpender.Web.API\SmartSpender.Web.API.csproj" />
   </ItemGroup>
 
 </Project> 

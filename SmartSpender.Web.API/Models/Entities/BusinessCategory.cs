@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace SmartSpender.API.Models.Entities;
+namespace SmartSpender.Web.API.Models.Entities;
 
 public partial class BusinessCategory
 {

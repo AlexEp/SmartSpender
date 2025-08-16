@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SmartSpender.API.Models;
-using SmartSpender.API.Models.Entities;
+using SmartSpender.Web.API.Models;
+using SmartSpender.Web.API.Models.Entities;
 
-namespace SmartSpender.API.Controllers
+namespace SmartSpender.Web.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

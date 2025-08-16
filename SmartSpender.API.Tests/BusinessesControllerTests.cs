@@ -1,14 +1,14 @@
 using Microsoft.EntityFrameworkCore;
-using SmartSpender.API.Controllers;
-using SmartSpender.API.Models;
-using SmartSpender.API.Models.Entities;
+using SmartSpender.Web.API.Controllers;
+using SmartSpender.Web.API.Models;
+using SmartSpender.Web.API.Models.Entities;
 using Xunit;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace SmartSpender.API.Tests
+namespace SmartSpender.Web.API.Tests
 {
     public class BusinessesControllerTests
     {

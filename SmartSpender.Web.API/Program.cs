@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using SmartSpender.API.Models;
+using SmartSpender.Web.API.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

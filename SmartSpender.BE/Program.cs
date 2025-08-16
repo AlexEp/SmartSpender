@@ -1,14 +1,14 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using System;
-using my_test.Models;
+using SmartSpender.Web.API.Models;
 using System.Threading.Tasks;
 using System.Buffers;
 using Microsoft.Identity.Client;
 using System.Threading;
 using System.Diagnostics;
 using System.Threading.Channels;
-using my_test.Services;
+using SmartSpender.Web.API.Services;
 
 class Program
 {

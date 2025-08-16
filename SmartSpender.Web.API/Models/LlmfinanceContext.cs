@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using SmartSpender.API.Models.Entities;
+using SmartSpender.Web.API.Models.Entities;
 
-namespace SmartSpender.API.Models;
+namespace SmartSpender.Web.API.Models;
 
 public partial class LlmfinanceContext : DbContext
 {

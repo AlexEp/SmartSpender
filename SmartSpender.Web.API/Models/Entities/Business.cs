@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace my_test.Models.Entities;
+namespace SmartSpender.Web.API.Models.Entities;
 
 public partial class Business
 {
