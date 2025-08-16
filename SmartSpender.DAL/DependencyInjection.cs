@@ -21,6 +21,9 @@ namespace SmartSpender.DAL
 
             // Register the business service
             services.AddScoped<IBusinessService, BusinessService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IBusinessCategoryService, BusinessCategoryService>();
+            services.AddScoped<IRawDataService, RawDataService>();
 
             return services;
         }

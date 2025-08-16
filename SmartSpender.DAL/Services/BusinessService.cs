@@ -38,5 +38,51 @@ namespace SmartSpender.DAL.Services
                 Description = business.Description
             };
         }
+
+        public async Task<BusinessDto> CreateBusinessAsync(CreateBusinessDto createBusinessDto)
+        {
+            var business = new Business
+            {
+                Description = createBusinessDto.Description
+            };
+
+            await _businessRepository.AddAsync(business);
+            await _businessRepository.SaveChangesAsync();
+
+            return new BusinessDto
+            {
+                BusinessId = business.BusinessId,
+                Description = business.Description
+            };
+        }
+
+        public async Task<bool> UpdateBusinessAsync(int id, UpdateBusinessDto updateBusinessDto)
+        {
+            var business = await _businessRepository.GetByIdAsync(id);
+            if (business == null)
+            {
+                return false;
+            }
+
+            business.Description = updateBusinessDto.Description;
+            _businessRepository.Update(business);
+            await _businessRepository.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> DeleteBusinessAsync(int id)
+        {
+            var business = await _businessRepository.GetByIdAsync(id);
+            if (business == null)
+            {
+                return false;
+            }
+
+            _businessRepository.Delete(business);
+            await _businessRepository.SaveChangesAsync();
+
+            return true;
+        }
     }
 }
