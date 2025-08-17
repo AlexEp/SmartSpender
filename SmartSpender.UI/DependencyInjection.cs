@@ -1,24 +1,20 @@
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
-using SmartSpender.UI.Models;
+using Microsoft.Extensions.DependencyInjection;
+using SmartSpender.DAL.BL;
+using SmartSpender.UI.Repositories;
 using SmartSpender.UI.Services;
 
-namespace SmartSpender.UI
+namespace SmartSpender.UI;
+
+public static class DependencyInjection
 {
-    public static class DependencyInjection
+    public static IServiceCollection AddUIServices(this IServiceCollection services, IConfiguration configuration)
     {
-        public static IServiceCollection AddUIServices(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddDbContext<LlmfinanceContext>(options =>
-                options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
+        services.AddDataAccessLayer(configuration);
 
-            services.AddTransient<BusinessCategoryProcessor>();
-            services.AddTransient<ExcelDataImporter>();
-            services.AddTransient<ExelFileDB>();
-            services.AddTransient<RawDataToBusinessProcessor>();
+        services.AddTransient<ExcelImportService>();
+        services.AddTransient<IRepository, Repository>();
 
-            return services;
-        }
+        return services;
     }
 }

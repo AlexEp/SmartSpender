@@ -24,6 +24,7 @@ namespace SmartSpender.DAL.BL
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IBusinessCategoryService, BusinessCategoryService>();
             services.AddScoped<IRawDataService, RawDataService>();
+            services.AddScoped<IDataProcessingService, DataProcessingService>();
 
             return services;
         }

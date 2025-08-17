@@ -92,5 +92,32 @@ namespace SmartSpender.DAL.BL.Services
             await _repository.SaveChangesAsync();
             return true;
         }
+
+        public async Task CreateRawDataBulkAsync(IEnumerable<CreateRawDataDto> createRawDataDtos)
+        {
+            var allRawData = await _repository.GetAllAsync();
+
+            foreach (var dto in createRawDataDtos)
+            {
+                bool exists = allRawData.Any(rd =>
+                    rd.Source == dto.Source &&
+                    rd.Description == dto.Description &&
+                    rd.Price == dto.Price &&
+                    rd.IssueDate == dto.IssueDate);
+
+                if (!exists)
+                {
+                    var rawData = new RawData
+                    {
+                        Source = dto.Source,
+                        Description = dto.Description,
+                        Price = dto.Price,
+                        IssueDate = dto.IssueDate
+                    };
+                    await _repository.AddAsync(rawData);
+                }
+            }
+            await _repository.SaveChangesAsync();
+        }
     }
 }
