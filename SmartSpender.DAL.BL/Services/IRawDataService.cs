@@ -9,6 +9,7 @@ namespace SmartSpender.DAL.BL.Services
         Task<IEnumerable<RawDataDto>> GetAllRawDataAsync();
         Task<RawDataDto?> GetRawDataByIdAsync(int id);
         Task<RawDataDto> CreateRawDataAsync(CreateRawDataDto createDto);
+        Task CreateRawDataBulkAsync(IEnumerable<CreateRawDataDto> createRawDataDtos);
         Task<bool> UpdateRawDataAsync(int id, UpdateRawDataDto updateDto);
         Task<bool> DeleteRawDataAsync(int id);
     }
