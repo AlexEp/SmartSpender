@@ -11,10 +11,8 @@ namespace SmartSpender.DAL.BL
     {
         public static IServiceCollection AddDataAccessLayer(this IServiceCollection services, IConfiguration configuration)
         {
-            // The DbContext is configured with a hardcoded connection string in its OnConfiguring method.
-            // This is not ideal. A better approach is to use the connection string from appsettings.json
-            // and pass it here. For now, we register the DbContext and it will use the hardcoded string.
-            services.AddDbContext<LlmfinanceContext>();
+            services.AddDbContext<LlmfinanceContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             // Register the generic repository
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
