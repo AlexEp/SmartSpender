@@ -1,14 +1,14 @@
 using AutoFixture;
 using NSubstitute;
 using Shouldly;
-using SmartSpender.DAL.BL.Services;
-using SmartSpender.DAL.BL.Repositories;
-using SmartSpender.DAL.BL.Models.Entities;
+using SmartSpender.Core.Services;
+using SmartSpender.Core.Interfaces;
+using SmartSpender.Core.Models.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
-using SmartSpender.DAL.BL.DTOs;
+using SmartSpender.Core.DTOs;
 
 namespace SmartSpender.DAL.BL.Tests
 {

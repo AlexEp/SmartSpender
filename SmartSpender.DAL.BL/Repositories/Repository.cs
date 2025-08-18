@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using SmartSpender.DAL.BL.Models;
+using SmartSpender.Core.Models;
+using SmartSpender.Core.Interfaces;
 
 namespace SmartSpender.DAL.BL.Repositories
 {

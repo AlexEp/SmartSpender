@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SmartSpender.DAL.BL.DTOs;
-using SmartSpender.DAL.BL.Services;
+using SmartSpender.Core.DTOs;
+using SmartSpender.Core.Services;
 
 namespace SmartSpender.UI.Repositories
 {

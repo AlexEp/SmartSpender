@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSpender.UI", "SmartSpe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSpender.DAL.BL.Tests", "SmartSpender.DAL.BL.Tests\SmartSpender.DAL.BL.Tests.csproj", "{523F05FD-0741-4AB0-A35E-67E35724EEFD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSpender.Core", "SmartSpender.Core\SmartSpender.Core.csproj", "{FB5D0053-ACB0-4B46-B559-51B411EA11FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{523F05FD-0741-4AB0-A35E-67E35724EEFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{523F05FD-0741-4AB0-A35E-67E35724EEFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{523F05FD-0741-4AB0-A35E-67E35724EEFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB5D0053-ACB0-4B46-B559-51B411EA11FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB5D0053-ACB0-4B46-B559-51B411EA11FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB5D0053-ACB0-4B46-B559-51B411EA11FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB5D0053-ACB0-4B46-B559-51B411EA11FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
