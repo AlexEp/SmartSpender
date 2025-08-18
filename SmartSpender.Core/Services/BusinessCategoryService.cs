@@ -81,17 +81,17 @@ namespace SmartSpender.Core.Services
                                         .Where(bc => bc.BusinessId == businessId)
                                         .Select(bc => bc.CategoryId);
 
-            var includedCategories = allCategories.Where(c => includedCategoryIds.Contains(c.CategoryId))
-                                                  .Select(c => new CategoryDto { CategoryId = c.CategoryId, CategoryName = c.CategoryName })
+            var includedCategories = allCategories.Where(c => includedCategoryIds.Contains(c.Id))
+                                                  .Select(c => new CategoryDto { Id = c.Id, Name = c.Name })
                                                   .ToList();
 
-            var notIncludedCategories = allCategories.Where(c => !includedCategoryIds.Contains(c.CategoryId))
-                                                     .Select(c => new CategoryDto { CategoryId = c.CategoryId, CategoryName = c.CategoryName })
+            var notIncludedCategories = allCategories.Where(c => !includedCategoryIds.Contains(c.Id))
+                                                     .Select(c => new CategoryDto { Id = c.Id, Name = c.Name })
                                                      .ToList();
 
             return new BusinessCategoryComparisonDto
             {
-                Business = new BusinessDto { BusinessId = business.BusinessId, Description = business.Description },
+                Business = new BusinessDto { Id = business.Id, Name = business.Name },
                 IncludedCategories = includedCategories,
                 NotIncludedCategories = notIncludedCategories
             };
@@ -110,17 +110,17 @@ namespace SmartSpender.Core.Services
                                         .Where(bc => bc.CategoryId == categoryId)
                                         .Select(bc => bc.BusinessId);
 
-            var includedBusinesses = allBusinesses.Where(b => includedBusinessIds.Contains(b.BusinessId))
-                                                  .Select(b => new BusinessDto { BusinessId = b.BusinessId, Description = b.Description })
+            var includedBusinesses = allBusinesses.Where(b => includedBusinessIds.Contains(b.Id))
+                                                  .Select(b => new BusinessDto { Id = b.Id, Name = b.Name })
                                                   .ToList();
 
-            var notIncludedBusinesses = allBusinesses.Where(b => !includedBusinessIds.Contains(b.BusinessId))
-                                                     .Select(b => new BusinessDto { BusinessId = b.BusinessId, Description = b.Description })
+            var notIncludedBusinesses = allBusinesses.Where(b => !includedBusinessIds.Contains(b.Id))
+                                                     .Select(b => new BusinessDto { Id = b.Id, Name = b.Name })
                                                      .ToList();
 
             return new CategoryBusinessComparisonDto
             {
-                Category = new CategoryDto { CategoryId = category.CategoryId, CategoryName = category.CategoryName },
+                Category = new CategoryDto { Id = category.Id, Name = category.Name },
                 IncludedBusinesses = includedBusinesses,
                 NotIncludedBusinesses = notIncludedBusinesses
             };

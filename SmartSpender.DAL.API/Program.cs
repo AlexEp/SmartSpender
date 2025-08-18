@@ -3,6 +3,14 @@ using SmartSpender.DAL.BL;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowMyOrigin",
+        builder => builder.WithOrigins("http://localhost:4200")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod());
+});
+
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddDalServices(builder.Configuration);
@@ -19,6 +27,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors("AllowMyOrigin");
 }
 
 app.UseHttpsRedirection();
