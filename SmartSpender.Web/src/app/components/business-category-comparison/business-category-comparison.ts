@@ -11,13 +11,15 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
 import { FormsModule } from '@angular/forms';
+import { DragDropModule, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-business-category-comparison',
   templateUrl: './business-category-comparison.html',
   styleUrls: ['./business-category-comparison.scss'],
   standalone: true,
-  imports: [CommonModule, MatTabsModule, MatSelectModule, MatListModule, FormsModule]
+  imports: [CommonModule, MatTabsModule, MatSelectModule, MatListModule, FormsModule, DragDropModule, MatButtonModule]
 })
 export class BusinessCategoryComparisonComponent implements OnInit {
   businesses: BusinessDto[] = [];
@@ -55,6 +57,43 @@ export class BusinessCategoryComparisonComponent implements OnInit {
     if (this.selectedCategoryId) {
       this.businessCategoryService.getCategoryBusinessComparison(this.selectedCategoryId).subscribe(data => {
         this.categoryComparison = data;
+      });
+    }
+  }
+
+  drop(event: CdkDragDrop<any[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+                        event.container.data,
+                        event.previousIndex,
+                        event.currentIndex);
+    }
+  }
+
+  saveBusinessCategoryChanges(): void {
+    if (this.selectedBusinessId && this.businessComparison) {
+      const updatedData = {
+        businessId: this.selectedBusinessId,
+        categoryIds: this.businessComparison.includedCategories.map(c => c.categoryId)
+      };
+      this.businessCategoryService.updateBusinessCategories(updatedData).subscribe(() => {
+        // Optionally, show a success message
+        console.log('Business-category relationships updated successfully.');
+      });
+    }
+  }
+
+  saveCategoryBusinessChanges(): void {
+    if (this.selectedCategoryId && this.categoryComparison) {
+      const updatedData = {
+        categoryId: this.selectedCategoryId,
+        businessIds: this.categoryComparison.includedBusinesses.map(b => b.businessId)
+      };
+      this.businessCategoryService.updateCategoryBusinesses(updatedData).subscribe(() => {
+        // Optionally, show a success message
+        console.log('Category-business relationships updated successfully.');
       });
     }
   }

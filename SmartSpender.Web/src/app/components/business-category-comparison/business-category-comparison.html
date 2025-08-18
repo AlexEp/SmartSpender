@@ -10,24 +10,25 @@
         </mat-select>
       </mat-form-field>
 
-      <div *ngIf="businessComparison" class="comparison-container">
+      <div *ngIf="businessComparison" class="comparison-container" cdkDropListGroup>
         <div class="category-list">
           <h3>Included Categories</h3>
-          <mat-list>
-            <mat-list-item *ngFor="let category of businessComparison.includedCategories">
+          <mat-list cdkDropList [cdkDropListData]="businessComparison.includedCategories" (cdkDropListDropped)="drop($event)">
+            <mat-list-item *ngFor="let category of businessComparison.includedCategories" cdkDrag>
               {{ category.categoryName }}
             </mat-list-item>
           </mat-list>
         </div>
         <div class="category-list">
           <h3>Not Included Categories</h3>
-          <mat-list>
-            <mat-list-item *ngFor="let category of businessComparison.notIncludedCategories">
+          <mat-list cdkDropList [cdkDropListData]="businessComparison.notIncludedCategories" (cdkDropListDropped)="drop($event)">
+            <mat-list-item *ngFor="let category of businessComparison.notIncludedCategories" cdkDrag>
               {{ category.categoryName }}
             </mat-list-item>
           </mat-list>
         </div>
       </div>
+      <button mat-raised-button color="primary" (click)="saveBusinessCategoryChanges()" *ngIf="selectedBusinessId">Save Changes</button>
     </div>
   </mat-tab>
   <mat-tab label="Category to Business">
@@ -41,24 +42,25 @@
         </mat-select>
       </mat-form-field>
 
-      <div *ngIf="categoryComparison" class="comparison-container">
+      <div *ngIf="categoryComparison" class="comparison-container" cdkDropListGroup>
         <div class="business-list">
           <h3>Included Businesses</h3>
-          <mat-list>
-            <mat-list-item *ngFor="let business of categoryComparison.includedBusinesses">
+          <mat-list cdkDropList [cdkDropListData]="categoryComparison.includedBusinesses" (cdkDropListDropped)="drop($event)">
+            <mat-list-item *ngFor="let business of categoryComparison.includedBusinesses" cdkDrag>
               {{ business.description }}
             </mat-list-item>
           </mat-list>
         </div>
         <div class="business-list">
           <h3>Not Included Businesses</h3>
-          <mat-list>
-            <mat-list-item *ngFor="let business of categoryComparison.notIncludedBusinesses">
+          <mat-list cdkDropList [cdkDropListData]="categoryComparison.notIncludedBusinesses" (cdkDropListDropped)="drop($event)">
+            <mat-list-item *ngFor="let business of categoryComparison.notIncludedBusinesses" cdkDrag>
               {{ business.description }}
             </mat-list-item>
           </mat-list>
         </div>
       </div>
+      <button mat-raised-button color="primary" (click)="saveCategoryBusinessChanges()" *ngIf="selectedCategoryId">Save Changes</button>
     </div>
   </mat-tab>
 </mat-tab-group>
