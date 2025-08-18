@@ -4,7 +4,7 @@ using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using SmartSpender.DAL.BL.Services;
+using SmartSpender.Core.Services;
 using SmartSpender.UI.Services;
 using System;
 using System.Threading.Tasks;

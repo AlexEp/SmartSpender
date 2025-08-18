@@ -5,8 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using ClosedXML.Excel;
 using ExcelDataReader;
-using SmartSpender.DAL.BL.Services;
-using SmartSpender.DAL.BL.DTOs;
+using SmartSpender.Core.Services;
+using SmartSpender.Core.DTOs;
 
 namespace SmartSpender.UI.Services
 {
