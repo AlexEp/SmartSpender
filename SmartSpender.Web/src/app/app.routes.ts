@@ -5,6 +5,7 @@ import { AdminComponent } from './components/admin/admin';
 import { BusinessComponent } from './components/business/business';
 import { CategoryComponent } from './components/category/category';
 import { BusinessCategoryComponent } from './components/business-category/business-category';
+import { BusinessCategoryComparisonComponent } from './components/business-category-comparison/business-category-comparison';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -16,6 +17,7 @@ export const routes: Routes = [
       { path: 'business', component: BusinessComponent },
       { path: 'category', component: CategoryComponent },
       { path: 'business-category', component: BusinessCategoryComponent },
+      { path: 'business-category-comparison', component: BusinessCategoryComparisonComponent },
       { path: '', redirectTo: 'business', pathMatch: 'full' },
     ],
   },

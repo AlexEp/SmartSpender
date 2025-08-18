@@ -11,5 +11,7 @@ namespace SmartSpender.Core.Services
         Task<BusinessCategoryDto> CreateBusinessCategoryAsync(CreateBusinessCategoryDto createDto);
         Task<bool> UpdateBusinessCategoryAsync(int id, UpdateBusinessCategoryDto updateDto);
         Task<bool> DeleteBusinessCategoryAsync(int id);
+        Task<BusinessCategoryComparisonDto> GetBusinessCategoryComparisonAsync(int businessId);
+        Task<CategoryBusinessComparisonDto> GetCategoryBusinessComparisonAsync(int categoryId);
     }
 }

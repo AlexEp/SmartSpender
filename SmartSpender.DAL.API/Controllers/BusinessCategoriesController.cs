@@ -63,5 +63,27 @@ namespace SmartSpender.DAL.API.Controllers
             }
             return NoContent();
         }
+
+        [HttpGet("compare/business/{businessId}")]
+        public async Task<ActionResult<BusinessCategoryComparisonDto>> GetBusinessCategoryComparison(int businessId)
+        {
+            var result = await _service.GetBusinessCategoryComparisonAsync(businessId);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+
+        [HttpGet("compare/category/{categoryId}")]
+        public async Task<ActionResult<CategoryBusinessComparisonDto>> GetCategoryBusinessComparison(int categoryId)
+        {
+            var result = await _service.GetCategoryBusinessComparisonAsync(categoryId);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
     }
 }

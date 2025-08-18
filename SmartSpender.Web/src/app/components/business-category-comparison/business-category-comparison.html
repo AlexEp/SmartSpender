@@ -1,0 +1,64 @@
+<mat-tab-group>
+  <mat-tab label="Business to Category">
+    <div class="tab-content">
+      <mat-form-field>
+        <mat-label>Select a Business</mat-label>
+        <mat-select [(ngModel)]="selectedBusinessId" (selectionChange)="onBusinessSelectionChange()">
+          <mat-option *ngFor="let business of businesses" [value]="business.businessId">
+            {{ business.description }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div *ngIf="businessComparison" class="comparison-container">
+        <div class="category-list">
+          <h3>Included Categories</h3>
+          <mat-list>
+            <mat-list-item *ngFor="let category of businessComparison.includedCategories">
+              {{ category.categoryName }}
+            </mat-list-item>
+          </mat-list>
+        </div>
+        <div class="category-list">
+          <h3>Not Included Categories</h3>
+          <mat-list>
+            <mat-list-item *ngFor="let category of businessComparison.notIncludedCategories">
+              {{ category.categoryName }}
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Category to Business">
+    <div class="tab-content">
+      <mat-form-field>
+        <mat-label>Select a Category</mat-label>
+        <mat-select [(ngModel)]="selectedCategoryId" (selectionChange)="onCategorySelectionChange()">
+          <mat-option *ngFor="let category of categories" [value]="category.categoryId">
+            {{ category.categoryName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div *ngIf="categoryComparison" class="comparison-container">
+        <div class="business-list">
+          <h3>Included Businesses</h3>
+          <mat-list>
+            <mat-list-item *ngFor="let business of categoryComparison.includedBusinesses">
+              {{ business.description }}
+            </mat-list-item>
+          </mat-list>
+        </div>
+        <div class="business-list">
+          <h3>Not Included Businesses</h3>
+          <mat-list>
+            <mat-list-item *ngFor="let business of categoryComparison.notIncludedBusinesses">
+              {{ business.description }}
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>
