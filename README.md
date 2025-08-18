@@ -9,6 +9,14 @@ The project is composed of three main projects:
 -   `SmartSpender.DAL` (Data Access Layer): This project is responsible for all database interactions. It uses Entity Framework Core to map C# entities to database tables. It also contains repositories and services for accessing and manipulating data.
 -   `SmartSpender.API`: This is an ASP.NET Core Web API project that exposes the application's functionality through a set of RESTful endpoints. It handles HTTP requests and responses, and uses the services from the `SmartSpender.DAL` project to perform CRUD operations.
 -   `SmartSpender.BE` (Background Service): This project is a background worker service that performs data processing tasks, such as importing data from Excel files. It runs independently of the API.
+-   `SmartSpender.Web`: This is an Angular single-page application (SPA) that provides the user interface for the application.
+
+## Ports
+
+The different services in the application run on the following ports:
+
+-   **`SmartSpender.API`**: 3010
+-   **`SmartSpender.Web`**: 4200
 
 ## Getting Started
 
