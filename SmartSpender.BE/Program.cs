@@ -1,84 +1,61 @@
 using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using SmartSpender.Core;
+using SmartSpender.Core.Services;
+using SmartSpender.DAL.BL;
 using System;
-using my_test.Models;
+using System.IO;
 using System.Threading.Tasks;
-using System.Buffers;
-using Microsoft.Identity.Client;
-using System.Threading;
-using System.Diagnostics;
-using System.Threading.Channels;
-using my_test.Services;
 
-class Program
+namespace SmartSpender.DataCollector
 {
-    static void Main(string[] args)
+    class Program
     {
-        try
+        static async Task Main(string[] args)
         {
-            // Build configuration
-            IConfiguration configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .Build();
-
-            // Create DbContext options
-            var optionsBuilder = new DbContextOptionsBuilder<LlmfinanceContext>();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-
-            // Create DbContext
-            using (var context = new LlmfinanceContext(optionsBuilder.Options))
+            try
             {
-                // Ensure database is created
-                context.Database.EnsureCreated();
+                // Build configuration
+                IConfiguration configuration = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                    .Build();
 
-                // 1. Create or update the Excel template file.
-                var FILE_NAME = "LLMFinance.xlsx";
-                var templateFilePath = Path.Combine(configuration.GetValue<string>("Paths:DataFilePath"), "20250812.xlsx");
-                //ExcelDataImporter excelDataImporter = new ExcelDataImporter(configuration);
-                //excelDataImporter.CreateExcelTemplate(); // Create the Excel template file
-                //var templateFilePath = excelDataImporter.AppendAllFoldersToTemplate(); // Append data from all EXCEL folders to the template file
+                // Set up dependency injection
+                var serviceCollection = new ServiceCollection();
+                ConfigureServices(serviceCollection, configuration);
+                var serviceProvider = serviceCollection.BuildServiceProvider();
 
+                // Resolve the data processing service
+                var dataProcessingService = serviceProvider.GetRequiredService<IDataProcessingService>();
 
-                /// 2. Processes the Excel file to RAWDATA table.
-                //var processor = new ExelFileDB(configuration, context, templateFilePath);
-                //processor.ProcessExcelFile();
+                // 1. Process raw data to businesses
+                Console.WriteLine("Processing raw data to businesses...");
+                await dataProcessingService.ProcessRawDataToBusinessAsync();
+                Console.WriteLine("Finished processing raw data to businesses.");
 
-
-                // 3. find and add new busnises if needed.
-                //var processor = new RawDataToBusinessProcessor(configuration, context);
-               //processor.ProcessRawDataToBusiness();
-
-
-
-                // 4. find and add categories and map them to businesses.
-                var processor = new BusinessCategoryProcessor(configuration, context);
-                processor.ProcessBusinessCategories();
-
-
-
+                // 2. Process business categories
+                Console.WriteLine("Processing business categories...");
+                var businessCategoryFilePath = Path.Combine(
+                    configuration.GetValue<string>("Paths:DataFilePath"),
+                    "BusinessCategory.xlsx"
+                );
+                await dataProcessingService.ProcessBusinessCategoriesAsync(businessCategoryFilePath);
+                Console.WriteLine("Finished processing business categories.");
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            Console.WriteLine("\nPress any key to exit...");
+            Console.ReadKey();
         }
-        catch (Exception ex)
+
+        private static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            Console.WriteLine($"Error: {ex.Message}");
+            services.AddDalServices(configuration);
+            services.AddCoreServices();
         }
-
-        Console.WriteLine("\nPress any key to exit...");
-        Console.ReadKey();
     }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
