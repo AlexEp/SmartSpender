@@ -41,6 +41,16 @@ The SmartSpender application is composed of three main projects:
 -   **`SmartSpender.BE` (Background Service):** A background worker service for data processing.
     -   **Responsibilities:** Running background tasks, such as importing data from Excel files. Runs independently of the API.
     -   **Key Components:** `Services` with `IHostedService` implementations.
+-   **`SmartSpender.Web` (Web Client):** An Angular single-page application (SPA).
+    -   **Responsibilities:** Providing the user interface for the application.
+    -   **Key Components:** `Components`, `Services`, `DTOs`.
+
+## Ports
+
+The different services in the application run on the following ports:
+
+-   **`SmartSpender.API`**: 3010
+-   **`SmartSpender.Web`**: 4200
 
 ## Development Guidelines
 
