@@ -5,10 +5,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowMyOrigin",
-        builder => builder.WithOrigins("http://localhost:4200")
-                          .AllowAnyHeader()
-                          .AllowAnyMethod());
+    options.AddPolicy("AllowAngular",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200")  // Angular dev server
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials();
+        });
 });
 
 // Add services to the container.
@@ -30,7 +34,10 @@ if (app.Environment.IsDevelopment())
     app.UseCors("AllowMyOrigin");
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
+
+// Enable CORS before MapControllers
+app.UseCors("AllowAngular");
 
 app.MapControllers();
 
