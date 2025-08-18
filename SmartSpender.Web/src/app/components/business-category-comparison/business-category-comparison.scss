@@ -9,5 +9,17 @@
 }
 
 .category-list, .business-list {
-  width: 48%;
+  width: 45%;
+
+  mat-selection-list {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+  }
+}
+
+.transfer-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

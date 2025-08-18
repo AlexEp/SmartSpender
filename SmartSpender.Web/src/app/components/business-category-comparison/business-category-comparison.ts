@@ -9,17 +9,19 @@ import { CategoryBusinessComparisonDto } from '../../dtos/category-business-comp
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
-import { MatListModule } from '@angular/material/list';
+import { MatListModule, MatSelectionList } from '@angular/material/list';
 import { FormsModule } from '@angular/forms';
-import { DragDropModule, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-business-category-comparison',
   templateUrl: './business-category-comparison.html',
   styleUrls: ['./business-category-comparison.scss'],
   standalone: true,
-  imports: [CommonModule, MatTabsModule, MatSelectModule, MatListModule, FormsModule, DragDropModule, MatButtonModule]
+  imports: [CommonModule, MatTabsModule, MatSelectModule, MatListModule, FormsModule, MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule]
 })
 export class BusinessCategoryComparisonComponent implements OnInit {
   businesses: BusinessDto[] = [];
@@ -28,6 +30,11 @@ export class BusinessCategoryComparisonComponent implements OnInit {
   selectedCategoryId?: number;
   businessComparison?: BusinessCategoryComparisonDto;
   categoryComparison?: CategoryBusinessComparisonDto;
+
+  filteredIncludedCategories: CategoryDto[] = [];
+  filteredNotIncludedCategories: CategoryDto[] = [];
+  filteredIncludedBusinesses: BusinessDto[] = [];
+  filteredNotIncludedBusinesses: BusinessDto[] = [];
 
   constructor(
     private businessService: BusinessService,
@@ -49,6 +56,8 @@ export class BusinessCategoryComparisonComponent implements OnInit {
     if (this.selectedBusinessId) {
       this.businessCategoryService.getBusinessCategoryComparison(this.selectedBusinessId).subscribe(data => {
         this.businessComparison = data;
+        this.filteredIncludedCategories = data.includedCategories;
+        this.filteredNotIncludedCategories = data.notIncludedCategories;
       });
     }
   }
@@ -57,18 +66,40 @@ export class BusinessCategoryComparisonComponent implements OnInit {
     if (this.selectedCategoryId) {
       this.businessCategoryService.getCategoryBusinessComparison(this.selectedCategoryId).subscribe(data => {
         this.categoryComparison = data;
+        this.filteredIncludedBusinesses = data.includedBusinesses;
+        this.filteredNotIncludedBusinesses = data.notIncludedBusinesses;
       });
     }
   }
 
-  drop(event: CdkDragDrop<any[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(event.previousContainer.data,
-                        event.container.data,
-                        event.previousIndex,
-                        event.currentIndex);
+  applyFilter(event: Event, listName: string) {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+
+    if (!this.businessComparison || !this.categoryComparison) {
+      return;
+    }
+
+    switch (listName) {
+      case 'includedCategories':
+        this.filteredIncludedCategories = this.businessComparison.includedCategories.filter(category =>
+          category.categoryName.toLowerCase().includes(filterValue)
+        );
+        break;
+      case 'notIncludedCategories':
+        this.filteredNotIncludedCategories = this.businessComparison.notIncludedCategories.filter(category =>
+          category.categoryName.toLowerCase().includes(filterValue)
+        );
+        break;
+      case 'includedBusinesses':
+        this.filteredIncludedBusinesses = this.categoryComparison.includedBusinesses.filter(business =>
+          business.description.toLowerCase().includes(filterValue)
+        );
+        break;
+      case 'notIncludedBusinesses':
+        this.filteredNotIncludedBusinesses = this.categoryComparison.notIncludedBusinesses.filter(business =>
+          business.description.toLowerCase().includes(filterValue)
+        );
+        break;
     }
   }
 
@@ -96,5 +127,33 @@ export class BusinessCategoryComparisonComponent implements OnInit {
         console.log('Category-business relationships updated successfully.');
       });
     }
+  }
+
+  moveFromIncludedToNotIncluded(selected: any[]): void {
+    if (!this.businessComparison) return;
+    const selectedValues = selected.map(s => s.value);
+    this.businessComparison.notIncludedCategories.push(...selectedValues);
+    this.businessComparison.includedCategories = this.businessComparison.includedCategories.filter(c => !selectedValues.includes(c));
+  }
+
+  moveFromNotIncludedToIncluded(selected: any[]): void {
+    if (!this.businessComparison) return;
+    const selectedValues = selected.map(s => s.value);
+    this.businessComparison.includedCategories.push(...selectedValues);
+    this.businessComparison.notIncludedCategories = this.businessComparison.notIncludedCategories.filter(c => !selectedValues.includes(c));
+  }
+
+  moveFromIncludedToNotIncludedBusinesses(selected: any[]): void {
+    if (!this.categoryComparison) return;
+    const selectedValues = selected.map(s => s.value);
+    this.categoryComparison.notIncludedBusinesses.push(...selectedValues);
+    this.categoryComparison.includedBusinesses = this.categoryComparison.includedBusinesses.filter(b => !selectedValues.includes(b));
+  }
+
+  moveFromNotIncludedToIncludedBusinesses(selected: any[]): void {
+    if (!this.categoryComparison) return;
+    const selectedValues = selected.map(s => s.value);
+    this.categoryComparison.includedBusinesses.push(...selectedValues);
+    this.categoryComparison.notIncludedBusinesses = this.categoryComparison.notIncludedBusinesses.filter(b => !selectedValues.includes(b));
   }
 }

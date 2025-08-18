@@ -16,7 +16,6 @@ export const routes: Routes = [
     children: [
       { path: 'business', component: BusinessComponent },
       { path: 'category', component: CategoryComponent },
-      { path: 'business-category', component: BusinessCategoryComponent },
       { path: 'business-category-comparison', component: BusinessCategoryComparisonComponent },
       { path: '', redirectTo: 'business', pathMatch: 'full' },
     ],
