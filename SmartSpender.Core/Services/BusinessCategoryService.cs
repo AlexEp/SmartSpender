@@ -4,16 +4,21 @@ using SmartSpender.Core.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace SmartSpender.Core.Services
 {
     public class BusinessCategoryService : IBusinessCategoryService
     {
         private readonly IRepository<BusinessCategory> _repository;
+        private readonly IRepository<Business> _businessRepository;
+        private readonly IRepository<Category> _categoryRepository;
 
-        public BusinessCategoryService(IRepository<BusinessCategory> repository)
+        public BusinessCategoryService(IRepository<BusinessCategory> repository, IRepository<Business> businessRepository, IRepository<Category> categoryRepository)
         {
             _repository = repository;
+            _businessRepository = businessRepository;
+            _categoryRepository = categoryRepository;
         }
 
         public async Task<IEnumerable<BusinessCategoryDto>> GetAllBusinessCategoriesAsync()
@@ -61,6 +66,64 @@ namespace SmartSpender.Core.Services
             _repository.Delete(item);
             await _repository.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<BusinessCategoryComparisonDto> GetBusinessCategoryComparisonAsync(int businessId)
+        {
+            var business = await _businessRepository.GetByIdAsync(businessId);
+            if (business == null)
+            {
+                return null;
+            }
+
+            var allCategories = await _categoryRepository.GetAllAsync();
+            var includedCategoryIds = (await _repository.GetAllAsync())
+                                        .Where(bc => bc.BusinessId == businessId)
+                                        .Select(bc => bc.CategoryId);
+
+            var includedCategories = allCategories.Where(c => includedCategoryIds.Contains(c.Id))
+                                                  .Select(c => new CategoryDto { Id = c.Id, Name = c.Name })
+                                                  .ToList();
+
+            var notIncludedCategories = allCategories.Where(c => !includedCategoryIds.Contains(c.Id))
+                                                     .Select(c => new CategoryDto { Id = c.Id, Name = c.Name })
+                                                     .ToList();
+
+            return new BusinessCategoryComparisonDto
+            {
+                Business = new BusinessDto { Id = business.Id, Name = business.Name },
+                IncludedCategories = includedCategories,
+                NotIncludedCategories = notIncludedCategories
+            };
+        }
+
+        public async Task<CategoryBusinessComparisonDto> GetCategoryBusinessComparisonAsync(int categoryId)
+        {
+            var category = await _categoryRepository.GetByIdAsync(categoryId);
+            if (category == null)
+            {
+                return null;
+            }
+
+            var allBusinesses = await _businessRepository.GetAllAsync();
+            var includedBusinessIds = (await _repository.GetAllAsync())
+                                        .Where(bc => bc.CategoryId == categoryId)
+                                        .Select(bc => bc.BusinessId);
+
+            var includedBusinesses = allBusinesses.Where(b => includedBusinessIds.Contains(b.Id))
+                                                  .Select(b => new BusinessDto { Id = b.Id, Name = b.Name })
+                                                  .ToList();
+
+            var notIncludedBusinesses = allBusinesses.Where(b => !includedBusinessIds.Contains(b.Id))
+                                                     .Select(b => new BusinessDto { Id = b.Id, Name = b.Name })
+                                                     .ToList();
+
+            return new CategoryBusinessComparisonDto
+            {
+                Category = new CategoryDto { Id = category.Id, Name = category.Name },
+                IncludedBusinesses = includedBusinesses,
+                NotIncludedBusinesses = notIncludedBusinesses
+            };
         }
     }
 }
