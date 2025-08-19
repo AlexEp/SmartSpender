@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
+import { ChartsComponent } from '../charts/charts';
 
 @Component({
   selector: 'app-home',
-  imports: [],
   templateUrl: './home.html',
-  styleUrl: './home.scss'
+  styleUrl: './home.scss',
+  standalone: true,
+  imports: [ChartsComponent],
 })
-export class Home {
-
-}
+export class Home {}
