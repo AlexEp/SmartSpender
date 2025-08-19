@@ -2,8 +2,5 @@
 <ul>
   <li *ngFor="let category of categories">
     {{ category.categoryName }}
-    <button (click)="loadSummary(category.categoryId)">Load</button>
   </li>
 </ul>
-
-<app-category-monthly-summary [categoryId]="selectedCategoryId"></app-category-monthly-summary>
