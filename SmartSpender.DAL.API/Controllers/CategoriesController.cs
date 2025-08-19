@@ -11,10 +11,19 @@ namespace SmartSpender.DAL.API.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
+        private readonly IReportingService _reportingService;
 
-        public CategoriesController(ICategoryService categoryService)
+        public CategoriesController(ICategoryService categoryService, IReportingService reportingService)
         {
             _categoryService = categoryService;
+            _reportingService = reportingService;
+        }
+
+        [HttpGet("{id}/monthly-summary")]
+        public async Task<ActionResult<IEnumerable<CategoryMonthlySummaryDto>>> GetCategoryMonthlySummary(int id)
+        {
+            var summary = await _reportingService.GetCategoryMonthlySummaryAsync(id);
+            return Ok(summary);
         }
 
         [HttpGet]

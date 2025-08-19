@@ -12,6 +12,7 @@ namespace SmartSpender.Core
             services.AddScoped<IRawDataService, RawDataService>();
             services.AddScoped<IBusinessCategoryService, BusinessCategoryService>();
             services.AddScoped<IDataProcessingService, DataProcessingService>();
+            services.AddScoped<IReportingService, ReportingService>();
 
             return services;
         }
