@@ -33,4 +33,12 @@ export class BusinessCategoryService {
   deleteBusinessCategory(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  updateBusinessCategories(data: { businessId: number; categoryIds: number[] }): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/UpdateBusinessCategories`, data);
+  }
+
+  updateCategoryBusinesses(data: { categoryId: number; businessIds: number[] }): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/UpdateCategoryBusinesses`, data);
+  }
 }

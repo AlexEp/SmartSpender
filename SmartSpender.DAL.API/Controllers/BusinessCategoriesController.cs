@@ -42,17 +42,6 @@ namespace SmartSpender.DAL.API.Controllers
             return CreatedAtAction(nameof(GetBusinessCategory), new { id = createdItem.Id }, createdItem);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBusinessCategory(int id, UpdateBusinessCategoryDto updateDto)
-        {
-            var result = await _service.UpdateBusinessCategoryAsync(id, updateDto);
-            if (!result)
-            {
-                return NotFound();
-            }
-            return NoContent();
-        }
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBusinessCategory(int id)
         {
@@ -84,6 +73,20 @@ namespace SmartSpender.DAL.API.Controllers
                 return NotFound();
             }
             return Ok(result);
+        }
+
+        [HttpPut("UpdateBusinessCategories")]
+        public async Task<IActionResult> UpdateBusinessCategories(UpdateBusinessCategoryDto updateDto)
+        {
+            await _service.UpdateBusinessCategoriesAsync(updateDto);
+            return NoContent();
+        }
+
+        [HttpPut("UpdateCategoryBusinesses")]
+        public async Task<IActionResult> UpdateCategoryBusinesses(UpdateCategoryBusinessDto updateDto)
+        {
+            await _service.UpdateCategoryBusinessesAsync(updateDto);
+            return NoContent();
         }
     }
 }

@@ -4,10 +4,37 @@
 
 .comparison-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  align-items: center;
   margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  background-color: #f9f9f9;
 }
 
 .category-list, .business-list {
-  width: 48%;
+  width: 45%;
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  mat-selection-list {
+    height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+  }
+}
+
+.transfer-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    button {
+        margin: 10px 0;
+    }
 }

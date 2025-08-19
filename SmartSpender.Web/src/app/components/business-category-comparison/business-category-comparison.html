@@ -10,22 +10,37 @@
         </mat-select>
       </mat-form-field>
 
+      <button mat-raised-button color="primary" (click)="saveBusinessCategoryChanges()" *ngIf="selectedBusinessId">Save Changes</button>
       <div *ngIf="businessComparison" class="comparison-container">
         <div class="category-list">
           <h3>Included Categories</h3>
-          <mat-list>
-            <mat-list-item *ngFor="let category of businessComparison.includedCategories">
+          <mat-form-field>
+            <input matInput (keyup)="applyFilter($event, 'includedCategories')" placeholder="Search">
+          </mat-form-field>
+          <mat-selection-list #includedCategoriesList>
+            <mat-list-option *ngFor="let category of filteredIncludedCategories" [value]="category">
               {{ category.categoryName }}
-            </mat-list-item>
-          </mat-list>
+            </mat-list-option>
+          </mat-selection-list>
+        </div>
+        <div class="transfer-buttons">
+          <button mat-button (click)="moveFromIncludedToNotIncluded(includedCategoriesList.selectedOptions.selected)">
+            &gt;
+          </button>
+          <button mat-button (click)="moveFromNotIncludedToIncluded(notIncludedCategoriesList.selectedOptions.selected)">
+            &lt;
+          </button>
         </div>
         <div class="category-list">
           <h3>Not Included Categories</h3>
-          <mat-list>
-            <mat-list-item *ngFor="let category of businessComparison.notIncludedCategories">
+          <mat-form-field>
+            <input matInput (keyup)="applyFilter($event, 'notIncludedCategories')" placeholder="Search">
+          </mat-form-field>
+          <mat-selection-list #notIncludedCategoriesList>
+            <mat-list-option *ngFor="let category of filteredNotIncludedCategories" [value]="category">
               {{ category.categoryName }}
-            </mat-list-item>
-          </mat-list>
+            </mat-list-option>
+          </mat-selection-list>
         </div>
       </div>
     </div>
@@ -40,23 +55,38 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <button mat-raised-button color="primary" (click)="saveCategoryBusinessChanges()" *ngIf="selectedCategoryId">Save Changes</button>
 
       <div *ngIf="categoryComparison" class="comparison-container">
         <div class="business-list">
           <h3>Included Businesses</h3>
-          <mat-list>
-            <mat-list-item *ngFor="let business of categoryComparison.includedBusinesses">
+          <mat-form-field>
+            <input matInput (keyup)="applyFilter($event, 'includedBusinesses')" placeholder="Search">
+          </mat-form-field>
+          <mat-selection-list #includedBusinessesList>
+            <mat-list-option *ngFor="let business of filteredIncludedBusinesses" [value]="business">
               {{ business.description }}
-            </mat-list-item>
-          </mat-list>
+            </mat-list-option>
+          </mat-selection-list>
+        </div>
+        <div class="transfer-buttons">
+          <button mat-button (click)="moveFromIncludedToNotIncludedBusinesses(includedBusinessesList.selectedOptions.selected)">
+            &gt;
+          </button>
+          <button mat-button (click)="moveFromNotIncludedToIncludedBusinesses(notIncludedBusinessesList.selectedOptions.selected)">
+            &lt;
+          </button>
         </div>
         <div class="business-list">
           <h3>Not Included Businesses</h3>
-          <mat-list>
-            <mat-list-item *ngFor="let business of categoryComparison.notIncludedBusinesses">
+          <mat-form-field>
+            <input matInput (keyup)="applyFilter($event, 'notIncludedBusinesses')" placeholder="Search">
+          </mat-form-field>
+          <mat-selection-list #notIncludedBusinessesList>
+            <mat-list-option *ngFor="let business of filteredNotIncludedBusinesses" [value]="business">
               {{ business.description }}
-            </mat-list-item>
-          </mat-list>
+            </mat-list-option>
+          </mat-selection-list>
         </div>
       </div>
     </div>

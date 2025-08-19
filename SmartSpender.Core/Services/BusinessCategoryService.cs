@@ -46,18 +46,6 @@ namespace SmartSpender.Core.Services
             return new BusinessCategoryDto { Id = item.Id, BusinessId = item.BusinessId, CategoryId = item.CategoryId };
         }
 
-        public async Task<bool> UpdateBusinessCategoryAsync(int id, UpdateBusinessCategoryDto updateDto)
-        {
-            var item = await _repository.GetByIdAsync(id);
-            if (item == null) return false;
-
-            item.BusinessId = updateDto.BusinessId;
-            item.CategoryId = updateDto.CategoryId;
-            _repository.Update(item);
-            await _repository.SaveChangesAsync();
-            return true;
-        }
-
         public async Task<bool> DeleteBusinessCategoryAsync(int id)
         {
             var item = await _repository.GetByIdAsync(id);
@@ -124,6 +112,52 @@ namespace SmartSpender.Core.Services
                 IncludedBusinesses = includedBusinesses,
                 NotIncludedBusinesses = notIncludedBusinesses
             };
+        }
+
+        public async Task UpdateBusinessCategoriesAsync(UpdateBusinessCategoryDto updateDto)
+        {
+            var existingCategories = (await _repository.GetAllAsync())
+                                       .Where(bc => bc.BusinessId == updateDto.BusinessId);
+
+            foreach (var item in existingCategories)
+            {
+                _repository.Delete(item);
+            }
+
+            foreach (var categoryId in updateDto.CategoryIds)
+            {
+                var newItem = new BusinessCategory
+                {
+                    BusinessId = updateDto.BusinessId,
+                    CategoryId = categoryId
+                };
+                await _repository.AddAsync(newItem);
+            }
+
+            await _repository.SaveChangesAsync();
+        }
+
+        public async Task UpdateCategoryBusinessesAsync(UpdateCategoryBusinessDto updateDto)
+        {
+            var existingBusinesses = (await _repository.GetAllAsync())
+                                       .Where(bc => bc.CategoryId == updateDto.CategoryId);
+
+            foreach (var item in existingBusinesses)
+            {
+                _repository.Delete(item);
+            }
+
+            foreach (var businessId in updateDto.BusinessIds)
+            {
+                var newItem = new BusinessCategory
+                {
+                    CategoryId = updateDto.CategoryId,
+                    BusinessId = businessId
+                };
+                await _repository.AddAsync(newItem);
+            }
+
+            await _repository.SaveChangesAsync();
         }
     }
 }
