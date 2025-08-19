@@ -4,6 +4,23 @@
 
 <div *ngIf="!isLoading && summary.length > 0">
   <h3>Monthly Summary</h3>
+
+  <div>
+    <button (click)="showPriceChart()">Total Price</button>
+    <button (click)="showEntriesChart()">Total Entries</button>
+  </div>
+
+  <div style="display: block">
+    <canvas
+      baseChart
+      [data]="lineChartData"
+      [options]="lineChartOptions"
+      [legend]="lineChartLegend"
+      type="line"
+    >
+    </canvas>
+  </div>
+
   <table>
     <thead>
       <tr>

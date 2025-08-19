@@ -1,19 +1,31 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BaseChartDirective } from 'ng2-charts';
+import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { CategoryService } from '../../services/category.service';
 import { CategoryMonthlySummaryDto } from '../../dtos/category-monthly-summary.dto';
 
 @Component({
   selector: 'app-category-monthly-summary',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, BaseChartDirective],
   templateUrl: './category-monthly-summary.html',
-  styleUrls: ['./category-monthly-summary.scss']
+  styleUrls: ['./category-monthly-summary.scss'],
 })
 export class CategoryMonthlySummaryComponent implements OnChanges {
   @Input() categoryId: number | null = null;
   summary: CategoryMonthlySummaryDto[] = [];
   isLoading = false;
+
+  public lineChartData: ChartConfiguration<'line'>['data'] = {
+    labels: [],
+    datasets: [],
+  };
+  public lineChartOptions: ChartOptions<'line'> = {
+    responsive: true,
+  };
+  public lineChartLegend = true;
+  private currentChartType: 'price' | 'entries' = 'price';
 
   constructor(private categoryService: CategoryService) {}
 
@@ -28,9 +40,50 @@ export class CategoryMonthlySummaryComponent implements OnChanges {
       return;
     }
     this.isLoading = true;
-    this.categoryService.getCategoryMonthlySummary(this.categoryId).subscribe(data => {
-      this.summary = data;
-      this.isLoading = false;
-    });
+    this.categoryService
+      .getCategoryMonthlySummary(this.categoryId)
+      .subscribe((data) => {
+        this.summary = data;
+        this.updateChart();
+        this.isLoading = false;
+      });
+  }
+
+  showPriceChart(): void {
+    this.currentChartType = 'price';
+    this.updateChart();
+  }
+
+  showEntriesChart(): void {
+    this.currentChartType = 'entries';
+    this.updateChart();
+  }
+
+  private updateChart(): void {
+    const labels = this.summary.map(item => `${item.year}/${item.month}`);
+    let data;
+    let label;
+
+    if (this.currentChartType === 'price') {
+      data = this.summary.map(item => item.totalPrice);
+      label = 'Total Price';
+    } else {
+      data = this.summary.map(item => item.totalEntries);
+      label = 'Total Entries';
+    }
+
+    this.lineChartData = {
+      labels: labels,
+      datasets: [
+        {
+          data: data,
+          label: label,
+          fill: true,
+          tension: 0.5,
+          borderColor: 'black',
+          backgroundColor: 'rgba(255,0,0,0.3)',
+        },
+      ],
+    };
   }
 }
