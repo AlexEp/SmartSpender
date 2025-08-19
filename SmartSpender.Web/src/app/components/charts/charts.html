@@ -1,0 +1,81 @@
+<div style="display: block">
+  <h2>Line Chart</h2>
+  <canvas
+    baseChart
+    [data]="lineChartData"
+    [options]="lineChartOptions"
+    [legend]="lineChartLegend"
+    type="line"
+  >
+  </canvas>
+</div>
+
+<div style="display: block">
+  <h2>Radar Chart</h2>
+  <canvas
+    baseChart
+    [data]="radarChartData"
+    [options]="radarChartOptions"
+    [legend]="radarChartLegend"
+    type="radar"
+  >
+  </canvas>
+</div>
+
+<div style="display: block">
+  <h2>Polar Area Chart</h2>
+  <canvas
+    baseChart
+    [data]="{
+      labels: polarAreaChartLabels,
+      datasets: polarAreaChartDatasets
+    }"
+    [options]="polarAreaChartOptions"
+    [legend]="polarAreaLegend"
+    type="polarArea"
+  >
+  </canvas>
+</div>
+
+<div style="display: block">
+  <h2>Pie Chart</h2>
+  <canvas
+    baseChart
+    [data]="{
+      labels: pieChartLabels,
+      datasets: pieChartDatasets
+    }"
+    [options]="pieChartOptions"
+    [legend]="pieChartLegend"
+    [plugins]="pieChartPlugins"
+    type="pie"
+  >
+  </canvas>
+</div>
+
+<div style="display: block">
+  <h2>Bar Chart</h2>
+  <canvas
+    baseChart
+    [data]="barChartData"
+    [options]="barChartOptions"
+    [plugins]="barChartPlugins"
+    [legend]="barChartLegend"
+    type="bar"
+  >
+  </canvas>
+</div>
+
+<div style="display: block">
+  <h2>Doughnut Chart</h2>
+  <canvas
+    baseChart
+    [data]="{
+      labels: doughnutChartLabels,
+      datasets: doughnutChartDatasets
+    }"
+    [options]="doughnutChartOptions"
+    type="doughnut"
+  >
+  </canvas>
+</div>
