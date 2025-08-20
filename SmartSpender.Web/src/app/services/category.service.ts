@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, tap } from 'rxjs';
 import { CategoryDto } from '../dtos/category.dto';
+import { CategoryMonthlySummaryDto } from '../dtos/category-monthly-summary.dto';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -40,5 +41,9 @@ export class CategoryService {
   invalidateCache() {
     this.cache$ = null;
     this.lastUpdated = null;
+  }
+
+  getCategoryMonthlySummary(categoryId: number): Observable<CategoryMonthlySummaryDto[]> {
+    return this.http.get<CategoryMonthlySummaryDto[]>(`${this.apiUrl}/${categoryId}/monthly-summary`);
   }
 }

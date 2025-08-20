@@ -1,0 +1,50 @@
+<mat-tab-group>
+  <mat-tab label="Category Month Report">
+    <div class="report-container">
+      <div class="report-controls">
+        <h2>Categories</h2>
+        <mat-form-field>
+          <mat-label>Category</mat-label>
+          <input
+            type="text"
+            matInput
+            [formControl]="categoryControl"
+            [matAutocomplete]="auto"
+          />
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option
+              *ngFor="let category of filteredCategories | async"
+              [value]="category"
+            >
+              {{ category.categoryName }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <button (click)="loadSummary()">Load</button>
+        <button (click)="clearSelection()">Clear</button>
+      </div>
+      <div class="report-content">
+        <app-category-monthly-summary
+          [categoryId]="selectedCategoryId"
+        ></app-category-monthly-summary>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Monthly Report">
+    <div>
+      <mat-form-field>
+        <mat-label>Year</mat-label>
+        <input matInput type="number" [(ngModel)]="selectedYear">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Month</mat-label>
+        <input matInput type="number" [(ngModel)]="selectedMonth">
+      </mat-form-field>
+      <button (click)="loadPieChart()">Load</button>
+    </div>
+    <app-category-pie-chart [chartData]="pieChartData"></app-category-pie-chart>
+  </mat-tab>
+  <mat-tab label="C"> Content of Tab C </mat-tab>
+  <mat-tab label="Examples"> <app-charts></app-charts> </mat-tab>
+</mat-tab-group>

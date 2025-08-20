@@ -1,0 +1,49 @@
+<div *ngIf="isLoading">
+  Loading...
+</div>
+
+<div *ngIf="!isLoading && summary.length > 0">
+  <h3>Monthly Summary</h3>
+
+  <div>
+    <button (click)="showPriceChart()">Total Price</button>
+    <button (click)="showEntriesChart()">Total Entries</button>
+    <button (click)="toggleChartType()">
+      Switch to {{ chartType === 'line' ? 'Bar' : 'Line' }} Chart
+    </button>
+  </div>
+
+  <div style="display: block">
+    <canvas
+      baseChart
+      [data]="lineChartData"
+      [options]="lineChartOptions"
+      [legend]="lineChartLegend"
+    [type]="chartType"
+    >
+    </canvas>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Year</th>
+        <th>Month</th>
+        <th>Total Entries</th>
+        <th>Total Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of summary">
+        <td>{{ item.year }}</td>
+        <td>{{ item.month }}</td>
+        <td>{{ item.totalEntries }}</td>
+        <td>{{ item.totalPrice | currency }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="!isLoading && summary.length === 0">
+  <p>No data available for this category.</p>
+</div>

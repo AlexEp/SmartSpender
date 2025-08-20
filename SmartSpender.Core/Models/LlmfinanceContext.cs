@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using SmartSpender.Core.DTOs;
 using SmartSpender.Core.Models.Entities;
 
 namespace SmartSpender.Core.Models;
@@ -24,8 +25,15 @@ public partial class LlmfinanceContext : DbContext
 
     public virtual DbSet<RawData> RawData { get; set; }
 
+    public virtual DbSet<CategoryMonthlySummaryDto> CategoryMonthlySummaries { get; set; }
+
+    public virtual DbSet<CategoryMonthlyPieChartDto> CategoryMonthlyPieChart { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<CategoryMonthlySummaryDto>().HasNoKey();
+        modelBuilder.Entity<CategoryMonthlyPieChartDto>().HasNoKey();
+
         modelBuilder.Entity<Business>(entity =>
         {
             entity.ToTable("Business");
