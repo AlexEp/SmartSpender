@@ -30,7 +30,20 @@
       </div>
     </div>
   </mat-tab>
-  <mat-tab label="B"> Content of Tab B </mat-tab>
+  <mat-tab label="B">
+    <div>
+      <mat-form-field>
+        <mat-label>Year</mat-label>
+        <input matInput type="number" [(ngModel)]="selectedYear">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Month</mat-label>
+        <input matInput type="number" [(ngModel)]="selectedMonth">
+      </mat-form-field>
+      <button (click)="loadPieChart()">Load</button>
+    </div>
+    <app-category-pie-chart [chartData]="pieChartData"></app-category-pie-chart>
+  </mat-tab>
   <mat-tab label="C"> Content of Tab C </mat-tab>
   <mat-tab label="Examples"> <app-charts></app-charts> </mat-tab>
 </mat-tab-group>
