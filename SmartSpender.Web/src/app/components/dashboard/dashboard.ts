@@ -83,4 +83,9 @@ export class DashboardComponent implements OnInit {
         this.pieChartData = data;
       });
   }
+
+  clearSelection(): void {
+    this.categoryControl.setValue('');
+    this.selectedCategoryId = null;
+  }
 }

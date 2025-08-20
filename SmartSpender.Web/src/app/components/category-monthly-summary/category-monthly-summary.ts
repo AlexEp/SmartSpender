@@ -17,14 +17,15 @@ export class CategoryMonthlySummaryComponent implements OnChanges {
   summary: CategoryMonthlySummaryDto[] = [];
   isLoading = false;
 
-  public lineChartData: ChartConfiguration<'line'>['data'] = {
+  public lineChartData: ChartConfiguration<'line' | 'bar'>['data'] = {
     labels: [],
     datasets: [],
   };
-  public lineChartOptions: ChartOptions<'line'> = {
+  public lineChartOptions: ChartOptions<'line' | 'bar'> = {
     responsive: true,
   };
   public lineChartLegend = true;
+  public chartType: 'line' | 'bar' = 'line';
   private currentChartType: 'price' | 'entries' = 'price';
 
   constructor(private categoryService: CategoryService) {}
@@ -57,6 +58,10 @@ export class CategoryMonthlySummaryComponent implements OnChanges {
   showEntriesChart(): void {
     this.currentChartType = 'entries';
     this.updateChart();
+  }
+
+  toggleChartType(): void {
+    this.chartType = this.chartType === 'line' ? 'bar' : 'line';
   }
 
   private updateChart(): void {

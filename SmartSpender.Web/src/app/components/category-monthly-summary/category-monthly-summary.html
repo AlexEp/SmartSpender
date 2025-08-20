@@ -8,6 +8,9 @@
   <div>
     <button (click)="showPriceChart()">Total Price</button>
     <button (click)="showEntriesChart()">Total Entries</button>
+    <button (click)="toggleChartType()">
+      Switch to {{ chartType === 'line' ? 'Bar' : 'Line' }} Chart
+    </button>
   </div>
 
   <div style="display: block">
@@ -16,7 +19,7 @@
       [data]="lineChartData"
       [options]="lineChartOptions"
       [legend]="lineChartLegend"
-      type="line"
+    [type]="chartType"
     >
     </canvas>
   </div>

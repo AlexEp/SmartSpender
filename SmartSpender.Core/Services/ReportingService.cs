@@ -54,7 +54,8 @@ namespace SmartSpender.Core.Services
                 JOIN dbo.BusinessCategory BC ON B.BusinessID = BC.BusinessID
                 JOIN dbo.Category C ON BC.CategoryID = C.CategoryID
                 WHERE YEAR(RD.IssueDate) = {0} AND MONTH(RD.IssueDate) = {1}
-                GROUP BY C.CategoryID, C.CategoryName";
+                GROUP BY C.CategoryID, C.CategoryName
+                ORDER BY TotalPrice DESC";
 
             return await _context.CategoryMonthlyPieChart.FromSqlRaw(query, year, month).ToListAsync();
         }
