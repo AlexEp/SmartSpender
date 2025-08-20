@@ -1,13 +1,34 @@
 <mat-tab-group>
   <mat-tab label="Category Month Report">
-    <h2>Categories</h2>
-    <ul>
-      <li *ngFor="let category of categories">
-        {{ category.categoryName }}
-        <button (click)="loadSummary(category.categoryId)">Load</button>
-      </li>
-    </ul>
-    <app-category-monthly-summary [categoryId]="selectedCategoryId"></app-category-monthly-summary>
+    <div class="report-container">
+      <div class="report-controls">
+        <h2>Categories</h2>
+        <mat-form-field>
+          <mat-label>Category</mat-label>
+          <input
+            type="text"
+            matInput
+            [formControl]="categoryControl"
+            [matAutocomplete]="auto"
+          />
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option
+              *ngFor="let category of filteredCategories | async"
+              [value]="category"
+            >
+              {{ category.categoryName }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <button (click)="loadSummary()">Load</button>
+      </div>
+      <div class="report-content">
+        <app-category-monthly-summary
+          [categoryId]="selectedCategoryId"
+        ></app-category-monthly-summary>
+      </div>
+    </div>
   </mat-tab>
   <mat-tab label="B"> Content of Tab B </mat-tab>
   <mat-tab label="C"> Content of Tab C </mat-tab>

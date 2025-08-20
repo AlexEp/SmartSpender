@@ -1,0 +1,15 @@
+.report-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.report-controls {
+  flex: 1 1 30%;
+  display: flex;
+  flex-direction: column;
+}
+
+.report-content {
+  flex: 1 1 70%;
+}
