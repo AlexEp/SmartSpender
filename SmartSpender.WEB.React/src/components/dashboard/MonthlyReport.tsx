@@ -98,12 +98,12 @@ const MonthlyReport = () => {
 
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
-          <Paper elevation={3} sx={{ p: 2, height: '100%' }}>
+          <Paper elevation={3} sx={{ p: 2 }}>
             <Typography variant="h6">Monthly Spending by Category</Typography>
             {isLoadingPieChart && <CircularProgress />}
             {pieChartError && <Alert severity="error">{(pieChartError as Error).message}</Alert>}
             {pieChartData && pieChartData.length > 0 ? (
-              <Pie data={chartData} onClick={handlePieClick} options={{ responsive: true, maintainAspectRatio: false }} />
+              <Pie data={chartData} onClick={handlePieClick} options={{ responsive: true, maintainAspectRatio: true }} />
             ) : (
               !isLoadingPieChart && reportParams.year && <Typography>No data available for this period.</Typography>
             )}
