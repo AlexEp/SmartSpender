@@ -1,68 +1,43 @@
-# Hello, Jules!
+# AGENTS.md
 
-This document contains rules and guidelines for working with the **SmartSpender** codebase.
-
----
-
-## Golden Rules
-
-**These are the most important rules. You must follow them at all times.**
-
-### 1. The API is ONLY for Database CRUD
-
-The `SmartSpender.API` project has one and only one purpose: to expose the services from `SmartSpender.DAL` as HTTP endpoints.
-
--   **DO NOT** add any business logic to the API project.
--   **DO NOT** call any services other than those from the DAL.
--   The API controllers should be thin wrappers around the DAL services.
-
-### 2. Branch Naming Convention
-
-All branch names **MUST** follow this format: `{yymm}/feature/{some-description}`.
-
--   `yymm`: 2-digit year and 2-digit month (e.g., `2408`).
--   `feature`: The type of change.
--   `some-description`: A short, descriptive name in kebab-case.
-
-**Example:** `2408/feature/add-user-authentication`
-
----
+## Project Overview
+- **SmartSpender**: Personal finance tracking application.
+- **Stack**: .NET backend, Angular frontend, Avalonia desktop client.
 
 ## Project Structure
+- **`SmartSpender.Core`**: Core logic (Entities, DTOs, Services, Interfaces).
+- **`SmartSpender.DAL.BL`**: Data access business logic.
+- **`SmartSpender.DAL.API`**: ASP.NET Core Web API.
+- **`SmartSpender.DataCollector`**: .NET console app for background data processing. Located in `SmartSpender.BE/`.
+- **`SmartSpender.UI`**: Avalonia desktop application.
+- **`SmartSpender.Web`**: Angular SPA.
+- **`SmartSpender.DAL.BL.Tests`**: Unit tests for the data access layer.
 
-The SmartSpender application is composed of three main projects:
+## Golden Rules
+1.  **API Logic**: API controllers must be thin wrappers around `SmartSpender.DAL.BL` services. No business logic in controllers.
+2.  **Branch Naming**: `{yymm}/feature/{kebab-case-description}` (e.g., `2408/feature/new-feature`).
 
--   **`SmartSpender.DAL` (Data Access Layer):** The data-centric part of the application.
-    -   **Responsibilities:** All database-related operations.
-    -   **Key Components:** `Models`, `Repositories`, `Services`, `DTOs`.
--   **`SmartSpender.API` (Presentation Layer):** Exposes the application's functionality via a RESTful API. **Strictly for DB CRUD operations.**
-    -   **Responsibilities:** Handling HTTP requests and calling DAL services.
-    -   **Key Components:** `Controllers`.
--   **`SmartSpender.BE` (Background Service):** A background worker service for data processing.
-    -   **Responsibilities:** Running background tasks, such as importing data from Excel files. Runs independently of the API.
-    -   **Key Components:** `Services` with `IHostedService` implementations.
--   **`SmartSpender.Web` (Web Client):** An Angular single-page application (SPA).
-    -   **Responsibilities:** Providing the user interface for the application.
-    -   **Key Components:** `Components`, `Services`, `DTOs`.
+## Setup & Execution
 
-## Ports
-
-The different services in the application run on the following ports:
-
--   **`SmartSpender.API`**: 3010
--   **`SmartSpender.Web`**: 4200
-
-## Development Guidelines
-
-### Adding a New API Endpoint
-
-1.  **DAL:** Add or modify entities, DTOs, and services as needed.
-2.  **API:** Add a new controller that injects and uses the corresponding service from the DAL.
-
-### Modifying the Background Service
-
-1.  **BE:** Modify the services in the `Services` directory in the `SmartSpender.BE` project.
+### Prerequisites
+- .NET 8 SDK
+- Node.js & npm
+- SQL Server
 
 ### Database
+- **Name**: `LLMFinance`
+- **Connection String**: Hardcoded in `SmartSpender.Core/Models/LlmfinanceContext.cs`.
+- **Schema**: Auto-generated on first run.
 
-The application uses a SQL Server database named `LLMFinance`. The connection string is hardcoded in `SmartSpender.DAL/Models/LlmfinanceContext.cs`. This should be moved to `appsettings.json` in the future. Use Entity Framework Core migrations for schema changes.
+### How to Run
+- **API**: `cd SmartSpender.DAL.API && dotnet run` (Port: 3010, Swagger: /swagger)
+- **Web**: `cd SmartSpender.Web && npm install && npm start` (Port: 4200)
+- **Desktop UI**: `cd SmartSpender.UI && dotnet run`
+- **Data Collector**: `cd SmartSpender.BE && dotnet run`
+- **Tests**: `cd SmartSpender.DAL.BL.Tests && dotnet test`
+
+## Development Guidelines
+- **New API Endpoint**:
+  1.  Modify `SmartSpender.Core` (Entities/DTOs).
+  2.  Modify `SmartSpender.DAL.BL` (Services).
+  3.  Add new controller to `SmartSpender.DAL.API`.

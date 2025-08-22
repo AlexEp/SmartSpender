@@ -23,5 +23,12 @@ namespace SmartSpender.DAL.API.Controllers
             var data = await _reportingService.GetCategoryMonthlyPieChartAsync(year, month);
             return Ok(data);
         }
+
+        [HttpGet("transactions/{year}/{month}/{categoryName}")]
+        public async Task<ActionResult<IEnumerable<TransactionDto>>> GetTransactions(int year, int month, string categoryName)
+        {
+            var data = await _reportingService.GetTransactionsForCategoryAsync(year, month, categoryName);
+            return Ok(data);
+        }
     }
 }

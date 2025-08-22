@@ -29,10 +29,13 @@ public partial class LlmfinanceContext : DbContext
 
     public virtual DbSet<CategoryMonthlyPieChartDto> CategoryMonthlyPieChart { get; set; }
 
+    public virtual DbSet<TransactionDto> Transactions { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<CategoryMonthlySummaryDto>().HasNoKey();
         modelBuilder.Entity<CategoryMonthlyPieChartDto>().HasNoKey();
+        modelBuilder.Entity<TransactionDto>().HasNoKey();
 
         modelBuilder.Entity<Business>(entity =>
         {

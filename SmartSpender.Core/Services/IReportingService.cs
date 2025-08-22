@@ -8,5 +8,6 @@ namespace SmartSpender.Core.Services
     {
         Task<IEnumerable<CategoryMonthlySummaryDto>> GetCategoryMonthlySummaryAsync(int categoryId);
         Task<IEnumerable<CategoryMonthlyPieChartDto>> GetCategoryMonthlyPieChartAsync(int year, int month);
+        Task<IEnumerable<TransactionDto>> GetTransactionsForCategoryAsync(int year, int month, string categoryName);
     }
 }
