@@ -8,26 +8,30 @@ import TransactionsTable from '../TransactionsTable';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
+interface ReportParams {
+  year: number | null;
+  month: number | null;
+  categoryName: string;
+}
+
 const MonthlyReport = () => {
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [year, setYear] = useState(new Date().getFullYear());
-  const [month, setMonth] = useState(new Date().getMonth() + 1);
-  const [queryParams, setQueryParams] = useState<{ year: number; month: number } | null>(null);
+  const [yearInput, setYearInput] = useState(new Date().getFullYear());
+  const [monthInput, setMonthInput] = useState(new Date().getMonth() + 1);
+  const [reportParams, setReportParams] = useState<ReportParams>({ year: null, month: null, categoryName: '' });
 
   const { data: pieChartData, isLoading: isLoadingPieChart, error: pieChartError } = useCategoryMonthlyPieChart(
-    queryParams?.year ?? null,
-    queryParams?.month ?? null
+    reportParams.year,
+    reportParams.month
   );
 
   const { data: transactions, isLoading: isLoadingTransactions, error: transactionsError } = useTransactionsForCategory(
-    queryParams?.year ?? null,
-    queryParams?.month ?? null,
-    selectedCategory
+    reportParams.year,
+    reportParams.month,
+    reportParams.categoryName
   );
 
   const handleLoad = () => {
-    setSelectedCategory('');
-    setQueryParams({ year, month });
+    setReportParams({ year: yearInput, month: monthInput, categoryName: '' });
   };
 
   const chartData = {
@@ -62,7 +66,7 @@ const MonthlyReport = () => {
       const chartElement = elements[0];
       const categoryName = pieChartData?.[chartElement.index]?.categoryName;
       if (categoryName) {
-        setSelectedCategory(categoryName);
+        setReportParams(prevParams => ({ ...prevParams, categoryName: categoryName }));
       }
     }
   };
@@ -76,16 +80,16 @@ const MonthlyReport = () => {
         <TextField
           label="Year"
           type="number"
-          value={year}
-          onChange={(e) => setYear(parseInt(e.target.value))}
+          value={yearInput}
+          onChange={(e) => setYearInput(parseInt(e.target.value))}
           variant="outlined"
           size="small"
         />
         <TextField
           label="Month"
           type="number"
-          value={month}
-          onChange={(e) => setMonth(parseInt(e.target.value))}
+          value={monthInput}
+          onChange={(e) => setMonthInput(parseInt(e.target.value))}
           variant="outlined"
           size="small"
         />
@@ -94,23 +98,21 @@ const MonthlyReport = () => {
 
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
-          <Paper elevation={3} sx={{ p: 2 }}>
+          <Paper elevation={3} sx={{ p: 2, height: '100%' }}>
             <Typography variant="h6">Monthly Spending by Category</Typography>
             {isLoadingPieChart && <CircularProgress />}
             {pieChartError && <Alert severity="error">{(pieChartError as Error).message}</Alert>}
             {pieChartData && pieChartData.length > 0 ? (
-              <Box sx={{ width: '50%', minWidth: '300px', mx: 'auto' }}>
-                <Pie data={chartData} onClick={handlePieClick} />
-              </Box>
+              <Pie data={chartData} onClick={handlePieClick} options={{ responsive: true, maintainAspectRatio: false }} />
             ) : (
-              !isLoadingPieChart && queryParams && <Typography>No data available for this period.</Typography>
+              !isLoadingPieChart && reportParams.year && <Typography>No data available for this period.</Typography>
             )}
           </Paper>
         </Grid>
         <Grid item xs={12} md={6}>
           <Paper elevation={3} sx={{ p: 2 }}>
             <Typography variant="h6">
-              Transactions for {selectedCategory || '...'}
+              Transactions for {reportParams.categoryName || '...'}
             </Typography>
             {isLoadingTransactions && <CircularProgress />}
             {transactionsError && <Alert severity="error">{(transactionsError as Error).message}</Alert>}
