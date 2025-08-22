@@ -34,7 +34,8 @@ export const getCategoryMonthlyPieChart = async (year: number, month: number): P
 };
 
 export const getTransactionsForCategory = async (year: number, month: number, categoryName: string): Promise<Transaction[]> => {
-  const response = await apiClient.get(`/reporting/transactions/${year}/${month}/${categoryName}`);
+  const encodedCategoryName = encodeURIComponent(categoryName);
+  const response = await apiClient.get(`/reporting/transactions/${year}/${month}/${encodedCategoryName}`);
   return response.data;
 };
 

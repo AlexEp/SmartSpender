@@ -26,6 +26,7 @@ const MonthlyReport = () => {
   );
 
   const handleLoad = () => {
+    setSelectedCategory('');
     setQueryParams({ year, month });
   };
 
@@ -98,7 +99,9 @@ const MonthlyReport = () => {
             {isLoadingPieChart && <CircularProgress />}
             {pieChartError && <Alert severity="error">{(pieChartError as Error).message}</Alert>}
             {pieChartData && pieChartData.length > 0 ? (
-              <Pie data={chartData} onClick={handlePieClick} />
+              <Box sx={{ width: '50%', minWidth: '300px', mx: 'auto' }}>
+                <Pie data={chartData} onClick={handlePieClick} />
+              </Box>
             ) : (
               !isLoadingPieChart && queryParams && <Typography>No data available for this period.</Typography>
             )}
