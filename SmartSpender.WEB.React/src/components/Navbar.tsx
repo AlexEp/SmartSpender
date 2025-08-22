@@ -1,19 +1,39 @@
-import { Link as RouterLink } from 'react-router-dom';
-import { Box, Button } from '@mui/material';
+import { NavLink } from 'react-router-dom';
+import { Button } from '@mui/material';
+
+const activeLinkStyle = {
+  fontWeight: 'bold',
+  textDecoration: 'underline',
+};
 
 const Navbar = () => {
   return (
-    <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', my: 2 }}>
-      <Button component={RouterLink} to="/" sx={{ mx: 1 }}>
+    <>
+      <Button
+        component={NavLink}
+        to="/"
+        style={({ isActive }) => (isActive ? activeLinkStyle : {})}
+        sx={{ color: 'white', mx: 1 }}
+      >
         Dashboard
       </Button>
-      <Button component={RouterLink} to="/admin" sx={{ mx: 1 }}>
+      <Button
+        component={NavLink}
+        to="/admin"
+        style={({ isActive }) => (isActive ? activeLinkStyle : {})}
+        sx={{ color: 'white', mx: 1 }}
+      >
         Admin
       </Button>
-      <Button component={RouterLink} to="/about" sx={{ mx: 1 }}>
+      <Button
+        component={NavLink}
+        to="/about"
+        style={({ isActive }) => (isActive ? activeLinkStyle : {})}
+        sx={{ color: 'white', mx: 1 }}
+      >
         About
       </Button>
-    </Box>
+    </>
   );
 };
 

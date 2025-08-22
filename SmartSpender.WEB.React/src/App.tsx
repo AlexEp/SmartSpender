@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { Container, ThemeProvider, CssBaseline, GlobalStyles } from '@mui/material';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Navbar from './components/Navbar';
 import Dashboard from './pages/Dashboard';
 import Admin from './pages/Admin';
 import About from './pages/About';
@@ -31,7 +30,6 @@ function App() {
       />
       <Router>
         <Header />
-        <Navbar />
         <Container sx={{ mt: 4, mb: 10 }}>
           <Routes>
             <Route path="/" element={<Dashboard />} />
