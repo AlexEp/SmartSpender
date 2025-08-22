@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
@@ -13,6 +13,7 @@ import { CategoryMonthlyPieChartDto } from '../../dtos/category-monthly-pie-char
 })
 export class CategoryPieChartComponent implements OnChanges {
   @Input() chartData: CategoryMonthlyPieChartDto[] = [];
+  @Output() categoryClicked = new EventEmitter<string>();
 
   public pieChartOptions: ChartOptions<'pie'> = {
     responsive: true,
@@ -38,6 +39,15 @@ export class CategoryPieChartComponent implements OnChanges {
   showEntriesChart(): void {
     this.currentChartType = 'entries';
     this.updateChart();
+  }
+
+  public chartClicked(event: any): void {
+    if (event.active && event.active.length > 0) {
+      const chart = event.active[0].element.$context.chart;
+      const index = event.active[0].index;
+      const label = chart.data.labels[index];
+      this.categoryClicked.emit(label);
+    }
   }
 
   private updateChart(): void {

@@ -59,5 +59,24 @@ namespace SmartSpender.Core.Services
 
             return await _context.CategoryMonthlyPieChart.FromSqlRaw(query, year, month).ToListAsync();
         }
+
+        public async Task<IEnumerable<TransactionDto>> GetTransactionsForCategoryAsync(int year, int month, string categoryName)
+        {
+            var query = @"
+                SELECT
+                    RD.DataID as DataId,
+                    RD.Source,
+                    RD.Description,
+                    RD.Price,
+                    RD.IssueDate
+                FROM dbo.RAW_DATA RD
+                JOIN dbo.Business B ON RD.Description = B.Description
+                JOIN dbo.BusinessCategory BC ON B.BusinessID = BC.BusinessID
+                JOIN dbo.Category C ON BC.CategoryID = C.CategoryID
+                WHERE YEAR(RD.IssueDate) = {0} AND MONTH(RD.IssueDate) = {1} AND C.CategoryName = {2}
+                ORDER BY RD.IssueDate DESC";
+
+            return await _context.Transactions.FromSqlRaw(query, year, month, categoryName).ToListAsync();
+        }
     }
 }

@@ -42,6 +42,8 @@ export class DashboardComponent implements OnInit {
   selectedYear: number = new Date().getFullYear();
   selectedMonth: number = new Date().getMonth() + 1;
   pieChartData: CategoryMonthlyPieChartDto[] = [];
+  transactions: import("../../dtos/transaction.dto").TransactionDto[] = [];
+  selectedCategoryName: string | null = null;
 
   constructor(
     private categoryService: CategoryService,
@@ -87,5 +89,13 @@ export class DashboardComponent implements OnInit {
   clearSelection(): void {
     this.categoryControl.setValue('');
     this.selectedCategoryId = null;
+  }
+
+  onCategoryClicked(categoryName: string): void {
+    this.selectedCategoryName = categoryName;
+    this.reportingService.getTransactionsForCategory(this.selectedYear, this.selectedMonth, categoryName)
+      .subscribe(data => {
+        this.transactions = data;
+      });
   }
 }

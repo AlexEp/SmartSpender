@@ -43,7 +43,27 @@
       </mat-form-field>
       <button (click)="loadPieChart()">Load</button>
     </div>
-    <app-category-pie-chart [chartData]="pieChartData"></app-category-pie-chart>
+    <app-category-pie-chart [chartData]="pieChartData" (categoryClicked)="onCategoryClicked($event)"></app-category-pie-chart>
+
+    <div *ngIf="selectedCategoryName">
+      <h3>Transactions for {{ selectedCategoryName }}</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let transaction of transactions">
+            <td>{{ transaction.issueDate | date: 'yyyy-MM-dd' }}</td>
+            <td>{{ transaction.description }}</td>
+            <td>{{ transaction.price | currency }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </mat-tab>
   <mat-tab label="C"> Content of Tab C </mat-tab>
   <mat-tab label="Examples"> <app-charts></app-charts> </mat-tab>
