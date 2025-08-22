@@ -44,19 +44,19 @@ export const getCategoryMonthlySummary = async (categoryId: number): Promise<Cat
 };
 
 export const getBusinessCategoryComparison = async (businessId: number): Promise<BusinessCategoryComparison> => {
-  const response = await apiClient.get(`/business-categories/comparison/${businessId}`);
+  const response = await apiClient.get(`/BusinessCategories/compare/business/${businessId}`);
   return response.data;
 };
 
 export const getCategoryBusinessComparison = async (categoryId: number): Promise<CategoryBusinessComparison> => {
-  const response = await apiClient.get(`/business-categories/comparison-by-category/${categoryId}`);
+  const response = await apiClient.get(`/BusinessCategories/compare/category/${categoryId}`);
   return response.data;
 };
 
 export const updateBusinessCategories = async (data: UpdateBusinessCategories): Promise<void> => {
-  await apiClient.put('/business-categories/update-business', data);
+  await apiClient.put('/BusinessCategories/UpdateBusinessCategories', data);
 };
 
 export const updateCategoryBusinesses = async (data: UpdateCategoryBusinesses): Promise<void> => {
-  await apiClient.put('/business-categories/update-category', data);
+  await apiClient.put('/BusinessCategories/UpdateCategoryBusinesses', data);
 };

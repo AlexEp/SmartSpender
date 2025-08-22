@@ -65,7 +65,11 @@ const MonthlyReport = () => {
             <Typography variant="h6">Monthly Spending by Category</Typography>
             {isLoadingPieChart && <CircularProgress />}
             {pieChartError && <Alert severity="error">{(pieChartError as Error).message}</Alert>}
-            {pieChartData && <Pie data={chartData} onClick={handlePieClick} />}
+            {pieChartData && pieChartData.length > 0 ? (
+              <Pie data={chartData} onClick={handlePieClick} />
+            ) : (
+              !isLoadingPieChart && <Typography>No data available for this period.</Typography>
+            )}
           </Paper>
         </Grid>
         <Grid item xs={12} md={6}>
