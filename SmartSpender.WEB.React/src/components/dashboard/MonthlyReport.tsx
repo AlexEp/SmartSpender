@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Typography, Box, CircularProgress, Alert, Paper, Grid } from '@mui/material';
+import { Typography, Box, CircularProgress, Alert, Paper, Grid, TextField, Button } from '@mui/material';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { useCategoryMonthlyPieChart } from '../../hooks/useCategoryMonthlyPieChart';
@@ -10,12 +10,24 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 const MonthlyReport = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
-  // For simplicity, using a fixed year and month
-  const year = 2023;
-  const month = 1;
+  const [year, setYear] = useState(new Date().getFullYear());
+  const [month, setMonth] = useState(new Date().getMonth() + 1);
+  const [queryParams, setQueryParams] = useState<{ year: number; month: number } | null>(null);
 
-  const { data: pieChartData, isLoading: isLoadingPieChart, error: pieChartError } = useCategoryMonthlyPieChart(year, month);
-  const { data: transactions, isLoading: isLoadingTransactions, error: transactionsError } = useTransactionsForCategory(year, month, selectedCategory);
+  const { data: pieChartData, isLoading: isLoadingPieChart, error: pieChartError } = useCategoryMonthlyPieChart(
+    queryParams?.year ?? null,
+    queryParams?.month ?? null
+  );
+
+  const { data: transactions, isLoading: isLoadingTransactions, error: transactionsError } = useTransactionsForCategory(
+    queryParams?.year ?? null,
+    queryParams?.month ?? null,
+    selectedCategory
+  );
+
+  const handleLoad = () => {
+    setQueryParams({ year, month });
+  };
 
   const chartData = {
     labels: pieChartData?.map(d => d.categoryName) || [],
@@ -57,8 +69,28 @@ const MonthlyReport = () => {
   return (
     <Box>
       <Typography variant="h4" gutterBottom>
-        Monthly Report - {month}/{year}
+        Monthly Report
       </Typography>
+      <Box sx={{ display: 'flex', gap: 2, mb: 2, alignItems: 'center' }}>
+        <TextField
+          label="Year"
+          type="number"
+          value={year}
+          onChange={(e) => setYear(parseInt(e.target.value))}
+          variant="outlined"
+          size="small"
+        />
+        <TextField
+          label="Month"
+          type="number"
+          value={month}
+          onChange={(e) => setMonth(parseInt(e.target.value))}
+          variant="outlined"
+          size="small"
+        />
+        <Button variant="contained" onClick={handleLoad}>Load</Button>
+      </Box>
+
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
           <Paper elevation={3} sx={{ p: 2 }}>
@@ -68,7 +100,7 @@ const MonthlyReport = () => {
             {pieChartData && pieChartData.length > 0 ? (
               <Pie data={chartData} onClick={handlePieClick} />
             ) : (
-              !isLoadingPieChart && <Typography>No data available for this period.</Typography>
+              !isLoadingPieChart && queryParams && <Typography>No data available for this period.</Typography>
             )}
           </Paper>
         </Grid>
