@@ -6,6 +6,5 @@ import { ChartsComponent } from '../charts/charts';
   templateUrl: './home.html',
   styleUrl: './home.scss',
   standalone: true,
-  imports: [ChartsComponent],
 })
 export class Home {}

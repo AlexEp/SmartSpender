@@ -15,6 +15,14 @@ export class ChartsComponent implements OnInit {
   public lineChartData!: ChartConfiguration<'line'>['data'];
   public lineChartOptions: ChartOptions<'line'> = {
     responsive: true,
+    scales: {
+      x: {
+        ticks: {
+          minRotation: 0,
+          maxRotation: 0,
+        },
+      },
+    },
   };
   public lineChartLegend = true;
 
@@ -33,6 +41,14 @@ export class ChartsComponent implements OnInit {
   public barChartData!: ChartConfiguration<'bar'>['data'];
   public barChartOptions: ChartConfiguration<'bar'>['options'] = {
     responsive: true,
+    scales: {
+      x: {
+        ticks: {
+          minRotation: 0,
+          maxRotation: 0,
+        },
+      },
+    },
   };
 
   // Doughnut Chart
