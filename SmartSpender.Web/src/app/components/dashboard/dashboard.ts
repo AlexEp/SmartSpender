@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ChartsComponent } from '../charts/charts';
@@ -14,6 +14,9 @@ import { map, startWith } from 'rxjs/operators';
 import { ReportingService } from '../../services/reporting.service';
 import { CategoryMonthlyPieChartDto } from '../../dtos/category-monthly-pie-chart.dto';
 import { CategoryPieChartComponent } from '../category-pie-chart/category-pie-chart';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { TransactionDto } from '../../dtos/transaction.dto';
 
 @Component({
   selector: 'app-dashboard',
@@ -29,6 +32,8 @@ import { CategoryPieChartComponent } from '../category-pie-chart/category-pie-ch
     MatInputModule,
     FormsModule,
     CategoryPieChartComponent,
+    MatTableModule,
+    MatSortModule,
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
@@ -42,8 +47,11 @@ export class DashboardComponent implements OnInit {
   selectedYear: number = new Date().getFullYear();
   selectedMonth: number = new Date().getMonth() + 1;
   pieChartData: CategoryMonthlyPieChartDto[] = [];
-  transactions: import("../../dtos/transaction.dto").TransactionDto[] = [];
+  transactions: MatTableDataSource<TransactionDto> = new MatTableDataSource();
   selectedCategoryName: string | null = null;
+  displayedColumns: string[] = ['issueDate', 'description', 'price'];
+
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private categoryService: CategoryService,
@@ -95,7 +103,8 @@ export class DashboardComponent implements OnInit {
     this.selectedCategoryName = categoryName;
     this.reportingService.getTransactionsForCategory(this.selectedYear, this.selectedMonth, categoryName)
       .subscribe(data => {
-        this.transactions = data;
+        this.transactions = new MatTableDataSource(data);
+        this.transactions.sort = this.sort;
       });
   }
 }
