@@ -1,13 +1,42 @@
 import { createTheme } from '@mui/material/styles';
-import { deepPurple, amber } from '@mui/material/colors';
 
 const theme = createTheme({
   palette: {
+    mode: 'light',
     primary: {
-      main: deepPurple[500],
+      main: '#673ab7',
     },
     secondary: {
-      main: amber[500],
+      main: '#f06292',
+    },
+    background: {
+      default: '#f5f5f5',
+      paper: '#ffffff',
+    },
+  },
+  typography: {
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    h4: {
+      fontWeight: 300,
+    },
+    h5: {
+      fontWeight: 400,
+    },
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 8,
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          boxShadow: '0 4px 20px 0 rgba(0,0,0,0.1)',
+        },
+      },
     },
   },
 });
