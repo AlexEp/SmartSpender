@@ -18,9 +18,16 @@ const CategoryMonthlySummary = ({ categoryId }: CategoryMonthlySummaryProps) => 
   if (error) return <Alert severity="error">{(error as Error).message}</Alert>;
   if (!summary || summary.length === 0) return <Typography>No data available for this category.</Typography>;
 
-  const chartLabels = summary.map(item => `${item.year}/${item.month}`);
-  const priceData = summary.map(item => item.totalPrice);
-  const entriesData = summary.map(item => item.totalEntries);
+  const sortedSummary = [...summary].sort((a, b) => {
+    if (a.year !== b.year) {
+      return a.year - b.year;
+    }
+    return a.month - b.month;
+  });
+
+  const chartLabels = sortedSummary.map(item => `${item.year}/${item.month}`);
+  const priceData = sortedSummary.map(item => item.totalPrice);
+  const entriesData = sortedSummary.map(item => item.totalEntries);
 
   const chartData = {
     labels: chartLabels,
@@ -98,7 +105,7 @@ const CategoryMonthlySummary = ({ categoryId }: CategoryMonthlySummaryProps) => 
             </TableRow>
           </TableHead>
           <TableBody>
-            {summary.map((item, index) => (
+            {sortedSummary.map((item, index) => (
               <TableRow key={index}>
                 <TableCell>{item.year}</TableCell>
                 <TableCell>{item.month}</TableCell>
