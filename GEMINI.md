@@ -126,3 +126,14 @@ The application uses the following main data models:
 - **`CategoryBusinessComparisonDto`**: Used for comparing businesses for a category, containing the category and lists of included and not included businesses.
 - **`CategoryMonthlyPieChartDto`**: Contains data for the monthly pie chart, including `categoryId`, `categoryName`, `totalPrice`, and `totalEntries`.
 - **`CategoryMonthlySummaryDto`**: Contains a monthly summary for a category, including `year`, `month`, `totalEntries`, and `totalPrice`.
+
+# Development Conventions
+
+## Branching Strategy
+
+Feature branches should be named using the following pattern:
+
+`{YYMM}/feature/{description}`
+
+- `{YYMM}`: The year and month in `YYMM` format (e.g., `2408` for August 2024).
+- `{description}`: A short, descriptive name of the feature in kebab-case.
