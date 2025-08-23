@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Typography, Box, CircularProgress, Alert, Paper, Grid, TextField, Button } from '@mui/material';
+import { Typography, Box, CircularProgress, Alert, Paper, TextField, Button } from '@mui/material';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { useCategoryMonthlyPieChart } from '../../hooks/useCategoryMonthlyPieChart';
 import { useTransactionsForCategory } from '../../hooks/useTransactionsForCategory';
 import TransactionsTable from '../TransactionsTable';
+import Grid from '@mui/material/Grid';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -97,7 +98,8 @@ const MonthlyReport = () => {
       </Box>
 
       <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
+        {/* First grid item with the 'item' prop added */}
+        <Grid size={{ xs: 12, md: 6 }}>
           <Paper elevation={3} sx={{ p: 2 }}>
             <Typography variant="h6">Monthly Spending by Category</Typography>
             {isLoadingPieChart && <CircularProgress />}
@@ -108,8 +110,10 @@ const MonthlyReport = () => {
               !isLoadingPieChart && reportParams.year && <Typography>No data available for this period.</Typography>
             )}
           </Paper>
-        </Grid>
-        <Grid item xs={12} md={6}>
+        </Grid >
+
+        {/* Second grid item with the 'item' prop added */}
+        <Grid size={{ xs: 12, md: 6 }}>
           <Paper elevation={3} sx={{ p: 2 }}>
             <Typography variant="h6">
               Transactions for {reportParams.categoryName || '...'}
@@ -118,8 +122,8 @@ const MonthlyReport = () => {
             {transactionsError && <Alert severity="error">{(transactionsError as Error).message}</Alert>}
             {transactions && <TransactionsTable transactions={transactions} />}
           </Paper>
-        </Grid>
-      </Grid>
+        </Grid >
+      </Grid >
     </Box>
   );
 };
