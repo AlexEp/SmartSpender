@@ -4,6 +4,7 @@ import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { useCategoryMonthlyPieChart } from '../../hooks/useCategoryMonthlyPieChart';
 import { useTransactionsForCategory } from '../../hooks/useTransactionsForCategory';
+import { useUncategorizedTransactions } from '../../hooks/useUncategorizedTransactions';
 import TransactionsTable from '../TransactionsTable';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -18,6 +19,7 @@ const MonthlyReport = () => {
   const [yearInput, setYearInput] = useState(new Date().getFullYear());
   const [monthInput, setMonthInput] = useState(new Date().getMonth() + 1);
   const [reportParams, setReportParams] = useState<ReportParams>({ year: null, month: null, categoryName: '' });
+  const [showUncategorized, setShowUncategorized] = useState(false);
 
   const { data: pieChartData, isLoading: isLoadingPieChart, error: pieChartError } = useCategoryMonthlyPieChart(
     reportParams.year,
@@ -27,11 +29,24 @@ const MonthlyReport = () => {
   const { data: transactions, isLoading: isLoadingTransactions, error: transactionsError } = useTransactionsForCategory(
     reportParams.year,
     reportParams.month,
-    reportParams.categoryName
+    reportParams.categoryName,
+    !showUncategorized
+  );
+
+  const { data: uncategorizedTransactions, isLoading: isLoadingUncategorized, error: uncategorizedError } = useUncategorizedTransactions(
+    reportParams.year,
+    reportParams.month,
+    showUncategorized
   );
 
   const handleLoad = () => {
     setReportParams({ year: yearInput, month: monthInput, categoryName: '' });
+    setShowUncategorized(false);
+  };
+
+  const handleShowUncategorized = () => {
+    setReportParams({ year: yearInput, month: monthInput, categoryName: '' });
+    setShowUncategorized(true);
   };
 
   const chartData = {
@@ -67,6 +82,7 @@ const MonthlyReport = () => {
       const categoryName = pieChartData?.[chartElement.index]?.categoryName;
       if (categoryName) {
         setReportParams(prevParams => ({ ...prevParams, categoryName: categoryName }));
+        setShowUncategorized(false);
       }
     }
   };
@@ -94,6 +110,7 @@ const MonthlyReport = () => {
           size="small"
         />
         <Button variant="contained" onClick={handleLoad}>Load</Button>
+        <Button variant="outlined" onClick={handleShowUncategorized}>Show Uncategorized</Button>
       </Box>
 
       <Grid container spacing={3}>
@@ -112,11 +129,17 @@ const MonthlyReport = () => {
         <Grid item xs={12} md={6}>
           <Paper elevation={3} sx={{ p: 2 }}>
             <Typography variant="h6">
-              Transactions for {reportParams.categoryName || '...'}
+              {showUncategorized ? 'Uncategorized Transactions' : `Transactions for ${reportParams.categoryName || '...'}`}
             </Typography>
             {isLoadingTransactions && <CircularProgress />}
             {transactionsError && <Alert severity="error">{(transactionsError as Error).message}</Alert>}
-            {transactions && <TransactionsTable transactions={transactions} />}
+            {isLoadingUncategorized && <CircularProgress />}
+            {uncategorizedError && <Alert severity="error">{(uncategorizedError as Error).message}</Alert>}
+            {showUncategorized ? (
+              uncategorizedTransactions && <TransactionsTable transactions={uncategorizedTransactions} />
+            ) : (
+              transactions && <TransactionsTable transactions={transactions} />
+            )}
           </Paper>
         </Grid>
       </Grid>

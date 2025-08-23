@@ -39,6 +39,11 @@ export const getTransactionsForCategory = async (year: number, month: number, ca
   return response.data;
 };
 
+export const getUncategorizedTransactions = async (year: number, month: number): Promise<Transaction[]> => {
+  const response = await apiClient.get(`/reporting/transactions/${year}/${month}/uncategorized`);
+  return response.data;
+};
+
 export const getCategoryMonthlySummary = async (categoryId: number): Promise<CategoryMonthlySummary[]> => {
   const response = await apiClient.get(`/categories/${categoryId}/monthly-summary`);
   return response.data;
