@@ -103,7 +103,7 @@ const MonthlyReport = () => {
             {isLoadingPieChart && <CircularProgress />}
             {pieChartError && <Alert severity="error">{(pieChartError as Error).message}</Alert>}
             {pieChartData && pieChartData.length > 0 ? (
-              <Pie data={chartData} onClick={handlePieClick} options={{ responsive: true, maintainAspectRatio: true }} />
+              <Pie data={chartData} options={{ responsive: true, maintainAspectRatio: true, onClick: handlePieClick }} />
             ) : (
               !isLoadingPieChart && reportParams.year && <Typography>No data available for this period.</Typography>
             )}
