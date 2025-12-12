@@ -52,7 +52,7 @@ const TransactionsTable = ({ transactions }: TransactionsTableProps) => {
   const [orderBy, setOrderBy] = useState<keyof Transaction>('issueDate');
 
   const handleRequestSort = (
-    event: React.MouseEvent<unknown>,
+    _event: React.MouseEvent<unknown>,
     property: keyof Transaction,
   ) => {
     const isAsc = orderBy === property && order === 'asc';

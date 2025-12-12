@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Box, Autocomplete, TextField, Button, CircularProgress, Alert } from '@mui/material';
+import { Box, Autocomplete, TextField, Button, CircularProgress, Alert, Paper, Typography } from '@mui/material';
 import { useBusinesses } from '../../hooks/useBusinesses';
 import { useBusinessCategoryComparison } from '../../hooks/useBusinessCategoryComparison';
 import { useUpdateBusinessCategories } from '../../hooks/useUpdateComparisons';
@@ -37,22 +37,37 @@ const BusinessToCategoryTab = () => {
 
   return (
     <Box>
-      <Autocomplete
-        options={businesses || []}
-        getOptionLabel={(option) => option.description}
-        loading={isLoadingBusinesses}
-        onChange={(event, newValue) => {
-          setSelectedBusiness(newValue);
-        }}
-        renderInput={(params) => <TextField {...params} label="Select a business" />}
-        sx={{ width: 300, mb: 2 }}
-      />
+      <Box sx={{ mb: 3 }}>
+        <Typography variant="h6" gutterBottom color="text.primary">
+          Business Configuration
+        </Typography>
+        <Typography variant="body2" color="text.secondary" paragraph>
+          Select a business to assign associated categories.
+        </Typography>
+      </Box>
 
-      {isLoadingComparison && <CircularProgress />}
+      <Paper elevation={0} sx={{ p: 3, mb: 4, bgcolor: 'background.paper', borderRadius: 4, border: '1px solid', borderColor: 'divider' }}>
+        <Autocomplete
+          options={businesses || []}
+          getOptionLabel={(option) => option.description}
+          loading={isLoadingBusinesses}
+          onChange={(_event, newValue) => {
+            setSelectedBusiness(newValue);
+          }}
+          renderInput={(params) => <TextField {...params} label="Select Business" variant="outlined" />}
+          sx={{ maxWidth: 400 }}
+        />
+      </Paper>
+
+      {isLoadingComparison && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
+          <CircularProgress />
+        </Box>
+      )}
       {comparisonError && <Alert severity="error">{(comparisonError as Error).message}</Alert>}
 
       {selectedBusiness && !isLoadingComparison && (
-        <>
+        <Box sx={{ mt: 4 }}>
           <TransferList
             left={notIncluded}
             right={included}
@@ -61,18 +76,20 @@ const BusinessToCategoryTab = () => {
             renderItem={(item) => item.categoryName}
             idAccessor={(item) => item.categoryId}
           />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSave}
-            disabled={updateMutation.isPending}
-            sx={{ mt: 2 }}
-          >
-            {updateMutation.isPending ? 'Saving...' : 'Save Changes'}
-          </Button>
+          <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSave}
+              disabled={updateMutation.isPending}
+              size="large"
+            >
+              {updateMutation.isPending ? 'Saving...' : 'Save Category Assignments'}
+            </Button>
+          </Box>
           {updateMutation.isSuccess && <Alert severity="success" sx={{ mt: 2 }}>Changes saved successfully!</Alert>}
           {updateMutation.isError && <Alert severity="error" sx={{ mt: 2 }}>{(updateMutation.error as Error).message}</Alert>}
-        </>
+        </Box>
       )}
     </Box>
   );

@@ -10,13 +10,13 @@ The application allows users to manage their expenses by organizing them into bu
 
 ## Project Structure
 
-- **`SmartSpender.DAL.API`**: An ASP.NET Core Web API that exposes the application's functionality through a set of RESTful endpoints.
-- **`SmartSpender.DAL.BL`**: A class library that contains the business logic of the application.
-- **`SmartSpender.Core`**: A class library that contains the core entities, DTOs, and interfaces.
-- **`SmartSpender.BE`**: A background worker service that performs data processing tasks.
-- **`SmartSpender.UI`**: An Avalonia desktop application.
-- **`SmartSpender.WEB`**: An Angular single-page application that provides the user interface for the application.
-- **`SmartSpender.WEB.React`**: A React single-page application.
+- **`SmartSpender.DAL.API`**: An ASP.NET Core Web API that exposes the application's functionality through a set of RESTful endpoints. (Located in root)
+- **`Backend/SmartSpender.DAL.BL`**: A class library that contains the business logic of the application.
+- **`Shared/SmartSpender.Core`**: A class library that contains the core entities, DTOs, and interfaces.
+- **`Backend/SmartSpender.BE`**: A background worker service that performs data processing tasks.
+- **`Desktop/SmartSpender.UI`**: An Avalonia desktop application.
+- **`Frontend/AngularApp`** (formerly SmartSpender.WEB): An Angular single-page application that provides the user interface for the application.
+- **`SmartSpender.WEB.React`**: A React single-page application. (Located in root)
 
 # Building and Running
 
@@ -67,6 +67,14 @@ npm start
 ```
 
 This will start a local development server. You can view the application by navigating to `http://localhost:5173/` in your web browser.
+
+### Key Features (UI/UX Upgrade)
+
+- **Modern Design System**: A premium theme based on Material UI with a custom color palette (Indigo/Emerald) and improved typography (Inter/Poppins).
+- **Responsive Layout**: A new modular layout with a dedicated Sidebar and Header for better navigation and context.
+- **Enhanced Dashboard**: Visual-rich dashboard with card-based layouts, polished charts, and clear metrics.
+- **Management Views**: Upgraded Business and Category pages with advanced tables, search, and action tooltips.
+- **Comparison Tools**: A redesigned Transfer List component for easy cross-assignment of categories and businesses.
 
 
 # API Endpoints

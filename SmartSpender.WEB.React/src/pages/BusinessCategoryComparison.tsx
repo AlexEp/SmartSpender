@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Box, Tabs, Tab } from '@mui/material';
-import BusinessToCategoryTab from '../components/comparison/BusinessToCategoryTab'; // To be created
-import CategoryToBusinessTab from '../components/comparison/CategoryToBusinessTab'; // To be created
+import { Box, Tabs, Tab, Container, Typography } from '@mui/material';
+import BusinessToCategoryTab from '../components/comparison/BusinessToCategoryTab';
+import CategoryToBusinessTab from '../components/comparison/CategoryToBusinessTab';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -21,7 +21,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ py: 3 }}>
           {children}
         </Box>
       )}
@@ -32,25 +32,50 @@ function TabPanel(props: TabPanelProps) {
 const BusinessCategoryComparison = () => {
   const [value, setValue] = useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="comparison tabs">
-          <Tab label="Business to Category" id="comparison-tab-0" />
-          <Tab label="Category to Business" id="comparison-tab-1" />
-        </Tabs>
+    <Container maxWidth="xl" disableGutters>
+      <Box sx={{ width: '100%', mb: 2 }}>
+        <Typography variant="h4" fontWeight="600" color="text.primary" gutterBottom>
+          Comparison Tools
+        </Typography>
+        <Typography variant="body1" color="text.secondary">
+          Analyze relationships between businesses and categories.
+        </Typography>
       </Box>
-      <TabPanel value={value} index={0}>
-        <BusinessToCategoryTab />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <CategoryToBusinessTab />
-      </TabPanel>
-    </Box>
+
+      <Box sx={{ width: '100%' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="comparison tabs"
+            textColor="primary"
+            indicatorColor="primary"
+            sx={{
+              '& .MuiTab-root': {
+                textTransform: 'none',
+                fontWeight: 600,
+                fontSize: '1rem',
+                mr: 4,
+              }
+            }}
+          >
+            <Tab label="Business to Category" id="comparison-tab-0" />
+            <Tab label="Category to Business" id="comparison-tab-1" />
+          </Tabs>
+        </Box>
+        <TabPanel value={value} index={0}>
+          <BusinessToCategoryTab />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <CategoryToBusinessTab />
+        </TabPanel>
+      </Box>
+    </Container>
   );
 };
 

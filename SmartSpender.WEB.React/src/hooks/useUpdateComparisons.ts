@@ -5,7 +5,7 @@ export const useUpdateBusinessCategories = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateBusinessCategories,
-    onSuccess: (data, variables) => {
+    onSuccess: (_data, variables) => {
       // Invalidate and refetch the comparison query to get the updated data
       queryClient.invalidateQueries({ queryKey: ['businessCategoryComparison', variables.businessId] });
     },
@@ -16,7 +16,7 @@ export const useUpdateCategoryBusinesses = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateCategoryBusinesses,
-    onSuccess: (data, variables) => {
+    onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: ['categoryBusinessComparison', variables.categoryId] });
     },
   });

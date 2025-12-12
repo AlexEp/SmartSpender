@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SmartSpender.Core\SmartSpender.Core.csproj" />
+    <ProjectReference Include="..\..\Shared\SmartSpender.Core\SmartSpender.Core.csproj" />
     <ProjectReference Include="..\SmartSpender.DAL.BL\SmartSpender.DAL.BL.csproj" />
   </ItemGroup>
 

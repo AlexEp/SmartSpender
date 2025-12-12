@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Typography, Box, Tabs, Tab } from '@mui/material';
-import MonthlyReport from '../components/dashboard/MonthlyReport'; // Will create this
-import CategoryMonthReport from '../components/dashboard/CategoryMonthReport'; // Will create this
+import { Box, Tabs, Tab, Container } from '@mui/material';
+import MonthlyReport from '../components/dashboard/MonthlyReport';
+import CategoryMonthReport from '../components/dashboard/CategoryMonthReport';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -21,7 +21,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ py: 3 }}>
           {children}
         </Box>
       )}
@@ -32,25 +32,41 @@ function TabPanel(props: TabPanelProps) {
 const Dashboard = () => {
   const [value, setValue] = useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="dashboard tabs">
-          <Tab label="Monthly Report" id="dashboard-tab-0" />
-          <Tab label="Category Month Report" id="dashboard-tab-1" />
-        </Tabs>
+    <Container maxWidth="xl" disableGutters>
+      <Box sx={{ width: '100%' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="dashboard tabs"
+            textColor="primary"
+            indicatorColor="primary"
+            sx={{
+              '& .MuiTab-root': {
+                textTransform: 'none',
+                fontWeight: 600,
+                fontSize: '1rem',
+                mr: 4,
+              }
+            }}
+          >
+            <Tab label="Monthly Overview" id="dashboard-tab-0" />
+            <Tab label="Category Analysis" id="dashboard-tab-1" />
+          </Tabs>
+        </Box>
+        <TabPanel value={value} index={0}>
+          <MonthlyReport />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <CategoryMonthReport />
+        </TabPanel>
       </Box>
-      <TabPanel value={value} index={0}>
-        <MonthlyReport />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <CategoryMonthReport />
-      </TabPanel>
-    </Box>
+    </Container>
   );
 };
 
