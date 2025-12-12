@@ -1,5 +1,9 @@
 import { useState, useMemo } from 'react';
-import { Grid, List, ListItem, ListItemText, ListItemIcon, Checkbox, Button, Paper, TextField } from '@mui/material';
+import { List, ListItem, ListItemText, ListItemIcon, Checkbox, Button, Paper, TextField, Typography, Box, Divider, Stack, ListItemButton } from '@mui/material';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
 
 interface TransferListProps<T> {
   left: T[];
@@ -56,29 +60,55 @@ export function TransferList<T>({ left, right, setLeft, setRight, renderItem, id
   const filteredRight = useMemo(() => right.filter(item => renderItem(item)?.toString().toLowerCase().includes(rightSearch.toLowerCase())), [right, rightSearch, renderItem]);
 
   const customList = (title: React.ReactNode, items: T[], search: string, onSearchChange: (value: string) => void) => (
-    <Paper sx={{ width: 300, height: 400, overflow: 'auto' }}>
-      <TextField
-        label={title}
-        variant="outlined"
-        fullWidth
-        value={search}
-        onChange={(e) => onSearchChange(e.target.value)}
-        sx={{ m: 1, width: 'calc(100% - 16px)' }}
-      />
-      <List dense component="div" role="list">
+    <Paper
+      elevation={0}
+      sx={{
+        width: 300,
+        height: 480,
+        display: 'flex',
+        flexDirection: 'column',
+        border: '1px solid',
+        borderColor: 'divider',
+        borderRadius: 3,
+        overflow: 'hidden'
+      }}
+    >
+      <Box sx={{ p: 2, bgcolor: 'background.neutral' }}>
+        <Typography variant="subtitle1" fontWeight="600" gutterBottom>{title}</Typography>
+        <Typography variant="caption" color="text.secondary">{items.length} items</Typography>
+      </Box>
+      <Divider />
+      <Box sx={{ p: 1 }}>
+        <TextField
+          placeholder="Search..."
+          variant="outlined"
+          size="small"
+          fullWidth
+          value={search}
+          onChange={(e) => onSearchChange(e.target.value)}
+        />
+      </Box>
+      <List dense component="div" role="list" sx={{ flexGrow: 1, overflow: 'auto', p: 0 }}>
         {items.map((item: T) => {
           const labelId = `transfer-list-item-${idAccessor(item)}-label`;
           return (
-            <ListItem key={idAccessor(item)} role="listitem" button onClick={handleToggle(item)}>
-              <ListItemIcon>
-                <Checkbox
-                  checked={checked.findIndex(checkedItem => idAccessor(checkedItem) === idAccessor(item)) !== -1}
-                  tabIndex={-1}
-                  disableRipple
-                  inputProps={{ 'aria-labelledby': labelId }}
-                />
-              </ListItemIcon>
-              <ListItemText id={labelId} primary={renderItem(item)} />
+            <ListItem
+              key={idAccessor(item)}
+              role="listitem"
+              disablePadding
+            >
+              <ListItemButton onClick={handleToggle(item)} dense>
+                <ListItemIcon>
+                  <Checkbox
+                    checked={checked.findIndex(checkedItem => idAccessor(checkedItem) === idAccessor(item)) !== -1}
+                    tabIndex={-1}
+                    disableRipple
+                    inputProps={{ 'aria-labelledby': labelId }}
+                    size="small"
+                  />
+                </ListItemIcon>
+                <ListItemText id={labelId} primary={renderItem(item)} primaryTypographyProps={{ fontSize: 14 }} />
+              </ListItemButton>
             </ListItem>
           );
         })}
@@ -88,25 +118,25 @@ export function TransferList<T>({ left, right, setLeft, setRight, renderItem, id
   );
 
   return (
-    <Grid container spacing={2} justifyContent="center" alignItems="center">
-      <Grid item>{customList('Not Included', filteredLeft, leftSearch, setLeftSearch)}</Grid>
-      <Grid item>
-        <Grid container direction="column" alignItems="center">
-          <Button sx={{ my: 0.5 }} variant="outlined" size="small" onClick={handleAllRight} disabled={left.length === 0}>
-            ≫
+    <Stack direction="row" spacing={3} justifyContent="center" alignItems="center">
+      <Box>{customList('Available Options', filteredLeft, leftSearch, setLeftSearch)}</Box>
+      <Box>
+        <Stack spacing={1}>
+          <Button variant="outlined" size="small" onClick={handleAllRight} disabled={left.length === 0} aria-label="move all right">
+            <KeyboardDoubleArrowRightIcon />
           </Button>
-          <Button sx={{ my: 0.5 }} variant="outlined" size="small" onClick={handleCheckedRight} disabled={leftChecked.length === 0}>
-            &gt;
+          <Button variant="outlined" size="small" onClick={handleCheckedRight} disabled={leftChecked.length === 0} aria-label="move selected right">
+            <KeyboardArrowRightIcon />
           </Button>
-          <Button sx={{ my: 0.5 }} variant="outlined" size="small" onClick={handleCheckedLeft} disabled={rightChecked.length === 0}>
-            &lt;
+          <Button variant="outlined" size="small" onClick={handleCheckedLeft} disabled={rightChecked.length === 0} aria-label="move selected left">
+            <KeyboardArrowLeftIcon />
           </Button>
-          <Button sx={{ my: 0.5 }} variant="outlined" size="small" onClick={handleAllLeft} disabled={right.length === 0}>
-            ≪
+          <Button variant="outlined" size="small" onClick={handleAllLeft} disabled={right.length === 0} aria-label="move all left">
+            <KeyboardDoubleArrowLeftIcon />
           </Button>
-        </Grid>
-      </Grid>
-      <Grid item>{customList('Included', filteredRight, rightSearch, setRightSearch)}</Grid>
-    </Grid>
+        </Stack>
+      </Box>
+      <Box>{customList('Selected', filteredRight, rightSearch, setRightSearch)}</Box>
+    </Stack>
   );
 }

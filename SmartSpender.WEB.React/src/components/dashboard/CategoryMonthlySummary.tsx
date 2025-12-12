@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { Box, Typography, CircularProgress, Alert, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { Box, Typography, CircularProgress, Alert, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Card, CardContent, CardHeader, Divider, ButtonGroup } from '@mui/material';
 import { Line, Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { useCategoryMonthlySummary } from '../../hooks/useCategoryMonthlySummary';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
+import BarChartIcon from '@mui/icons-material/BarChart';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend);
 
@@ -16,7 +18,7 @@ const CategoryMonthlySummary = ({ categoryId }: CategoryMonthlySummaryProps) => 
 
   if (isLoading) return <CircularProgress />;
   if (error) return <Alert severity="error">{(error as Error).message}</Alert>;
-  if (!summary || summary.length === 0) return <Typography>No data available for this category.</Typography>;
+  if (!summary || summary.length === 0) return <Typography color="text.secondary">No data available for this category.</Typography>;
 
   const sortedSummary = [...summary].sort((a, b) => {
     if (a.year !== b.year) {
@@ -35,16 +37,18 @@ const CategoryMonthlySummary = ({ categoryId }: CategoryMonthlySummaryProps) => 
       {
         label: 'Total Price',
         data: priceData,
-        borderColor: 'rgba(75, 192, 192, 1)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(79, 70, 229, 1)', // Indigo
+        backgroundColor: 'rgba(79, 70, 229, 0.2)',
         yAxisID: 'y',
+        tension: 0.3,
       },
       {
         label: 'Total Entries',
         data: entriesData,
-        borderColor: 'rgba(255, 99, 132, 1)',
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgba(16, 185, 129, 1)', // Emerald
+        backgroundColor: 'rgba(16, 185, 129, 0.2)',
         yAxisID: 'y1',
+        tension: 0.3,
       },
     ],
   };
@@ -78,44 +82,73 @@ const CategoryMonthlySummary = ({ categoryId }: CategoryMonthlySummaryProps) => 
         },
       },
     },
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+    }
   };
 
   const ChartComponent = chartType === 'line' ? Line : Bar;
 
   return (
-    <Box>
-      <Box sx={{ mb: 2 }}>
-        <Button variant="outlined" onClick={() => setChartType(chartType === 'line' ? 'bar' : 'line')}>
-          Switch to {chartType === 'line' ? 'Bar' : 'Line'} Chart
-        </Button>
-      </Box>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+      <Card>
+        <CardHeader
+          title="Trend Analysis"
+          action={
+            <ButtonGroup size="small" aria-label="chart type">
+              <Button
+                variant={chartType === 'line' ? 'contained' : 'outlined'}
+                onClick={() => setChartType('line')}
+              >
+                <ShowChartIcon />
+              </Button>
+              <Button
+                variant={chartType === 'bar' ? 'contained' : 'outlined'}
+                onClick={() => setChartType('bar')}
+              >
+                <BarChartIcon />
+              </Button>
+            </ButtonGroup>
+          }
+        />
+        <Divider />
+        <CardContent>
+          <Box sx={{ height: 400 }}>
+            <ChartComponent data={chartData} options={chartOptions} />
+          </Box>
+        </CardContent>
+      </Card>
 
-      <Box sx={{ mb: 4 }}>
-        <ChartComponent data={chartData} options={chartOptions} />
-      </Box>
-
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Year</TableCell>
-              <TableCell>Month</TableCell>
-              <TableCell>Total Entries</TableCell>
-              <TableCell align="right">Total Price</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {sortedSummary.map((item, index) => (
-              <TableRow key={index}>
-                <TableCell>{item.year}</TableCell>
-                <TableCell>{item.month}</TableCell>
-                <TableCell>{item.totalEntries}</TableCell>
-                <TableCell align="right">${item.totalPrice.toFixed(2)}</TableCell>
+      <Card>
+        <CardHeader title="Detailed History" />
+        <Divider />
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Period</TableCell>
+                <TableCell align="center">Total Entries</TableCell>
+                <TableCell align="right">Total Spending</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {sortedSummary.map((item, index) => (
+                <TableRow key={index} hover>
+                  <TableCell variant="head" sx={{ color: 'text.primary', fontWeight: 500 }}>
+                    {item.year}/{item.month.toString().padStart(2, '0')}
+                  </TableCell>
+                  <TableCell align="center">{item.totalEntries}</TableCell>
+                  <TableCell align="right" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
+                    ${item.totalPrice.toFixed(2)}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Card>
     </Box>
   );
 };

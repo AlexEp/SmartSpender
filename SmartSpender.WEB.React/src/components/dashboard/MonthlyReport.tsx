@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Typography, Box, CircularProgress, Alert, Paper, TextField, Button } from '@mui/material';
+import { Typography, Box, CircularProgress, Alert, TextField, Button, Card, CardContent, CardHeader, Divider } from '@mui/material';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { useCategoryMonthlyPieChart } from '../../hooks/useCategoryMonthlyPieChart';
@@ -57,27 +57,29 @@ const MonthlyReport = () => {
         label: 'Total Spending',
         data: pieChartData?.map(d => d.totalPrice) || [],
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
+          'rgba(79, 70, 229, 0.6)',   // Indigo
+          'rgba(16, 185, 129, 0.6)',  // Emerald
+          'rgba(245, 158, 11, 0.6)',  // Amber
+          'rgba(59, 130, 246, 0.6)',  // Blue
+          'rgba(239, 68, 68, 0.6)',   // Red
+          'rgba(139, 92, 246, 0.6)',  // Violet
+          'rgba(236, 72, 153, 0.6)',  // Pink
         ],
         borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
+          'rgba(79, 70, 229, 1)',
+          'rgba(16, 185, 129, 1)',
+          'rgba(245, 158, 11, 1)',
+          'rgba(59, 130, 246, 1)',
+          'rgba(239, 68, 68, 1)',
+          'rgba(139, 92, 246, 1)',
+          'rgba(236, 72, 153, 1)',
         ],
         borderWidth: 1,
       },
     ],
   };
 
-  const handlePieClick = (event: any, elements: any) => {
+  const handlePieClick = (_event: any, elements: any) => {
     if (elements.length > 0) {
       const chartElement = elements[0];
       const categoryName = pieChartData?.[chartElement.index]?.categoryName;
@@ -90,63 +92,81 @@ const MonthlyReport = () => {
 
   return (
     <Box>
-      <Typography variant="h4" gutterBottom>
-        Monthly Report
-      </Typography>
-      <Box sx={{ display: 'flex', gap: 2, mb: 2, alignItems: 'center' }}>
-        <TextField
-          label="Year"
-          type="number"
-          value={yearInput}
-          onChange={(e) => setYearInput(parseInt(e.target.value))}
-          variant="outlined"
-          size="small"
-        />
-        <TextField
-          label="Month"
-          type="number"
-          value={monthInput}
-          onChange={(e) => setMonthInput(parseInt(e.target.value))}
-          variant="outlined"
-          size="small"
-        />
-        <Button variant="contained" onClick={handleLoad}>Load</Button>
-        <Button variant="outlined" onClick={handleShowUncategorized}>Show Uncategorized</Button>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+        <Typography variant="h4" fontWeight="600" color="text.primary">
+          Monthly Report
+        </Typography>
+        <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+          <TextField
+            label="Year"
+            type="number"
+            value={yearInput}
+            onChange={(e) => setYearInput(parseInt(e.target.value))}
+            variant="outlined"
+            size="small"
+            sx={{ width: 100 }}
+          />
+          <TextField
+            label="Month"
+            type="number"
+            value={monthInput}
+            onChange={(e) => setMonthInput(parseInt(e.target.value))}
+            variant="outlined"
+            size="small"
+            sx={{ width: 80 }}
+          />
+          <Button variant="contained" onClick={handleLoad}>Load Data</Button>
+          <Button variant="outlined" color="warning" onClick={handleShowUncategorized}>Uncategorized</Button>
+        </Box>
       </Box>
 
       <Grid container spacing={3}>
-        {/* First grid item with the 'item' prop added */}
-        <Grid size={{ xs: 12, md: 6 }}>
-          <Paper elevation={3} sx={{ p: 2 }}>
-            <Typography variant="h6">Monthly Spending by Category</Typography>
-            {isLoadingPieChart && <CircularProgress />}
-            {pieChartError && <Alert severity="error">{(pieChartError as Error).message}</Alert>}
-            {pieChartData && pieChartData.length > 0 ? (
-              <Pie data={chartData} options={{ responsive: true, maintainAspectRatio: true, onClick: handlePieClick }} />
-            ) : (
-              !isLoadingPieChart && reportParams.year && <Typography>No data available for this period.</Typography>
-            )}
-          </Paper>
-        </Grid >
+        <Grid size={{ xs: 12, md: 5 }}>
+          <Card sx={{ height: '100%' }}>
+            <CardHeader title="Spending by Category" titleTypographyProps={{ variant: 'h6' }} />
+            <Divider />
+            <CardContent sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 400 }}>
+              {isLoadingPieChart && <CircularProgress />}
+              {pieChartError && <Alert severity="error">{(pieChartError as Error).message}</Alert>}
+              {pieChartData && pieChartData.length > 0 ? (
+                <Box sx={{ width: '100%', maxWidth: 400 }}>
+                  <Pie data={chartData} options={{ responsive: true, maintainAspectRatio: false, onClick: handlePieClick }} height={300} />
+                </Box>
+              ) : (
+                !isLoadingPieChart && reportParams.year && <Typography color="text.secondary">No data available for this period.</Typography>
+              )}
+            </CardContent>
+          </Card>
+        </Grid>
 
-        {/* Second grid item with the 'item' prop added */}
-        <Grid size={{ xs: 12, md: 6 }}>
-          <Paper elevation={3} sx={{ p: 2 }}>
-            <Typography variant="h6">
-              {showUncategorized ? 'Uncategorized Transactions' : `Transactions for ${reportParams.categoryName || '...'}`}
-            </Typography>
-            {isLoadingTransactions && <CircularProgress />}
-            {transactionsError && <Alert severity="error">{(transactionsError as Error).message}</Alert>}
-            {isLoadingUncategorized && <CircularProgress />}
-            {uncategorizedError && <Alert severity="error">{(uncategorizedError as Error).message}</Alert>}
-            {showUncategorized ? (
-              uncategorizedTransactions && <TransactionsTable transactions={uncategorizedTransactions} />
-            ) : (
-              transactions && <TransactionsTable transactions={transactions} />
-            )}
-          </Paper>
-        </Grid >
-      </Grid >
+        <Grid size={{ xs: 12, md: 7 }}>
+          <Card sx={{ height: '100%' }}>
+            <CardHeader
+              title={showUncategorized ? 'Uncategorized Transactions' : `Transactions: ${reportParams.categoryName || 'Select a Slice'}`}
+              titleTypographyProps={{ variant: 'h6' }}
+            />
+            <Divider />
+            <CardContent>
+              {isLoadingTransactions && <CircularProgress />}
+              {transactionsError && <Alert severity="error">{(transactionsError as Error).message}</Alert>}
+              {isLoadingUncategorized && <CircularProgress />}
+              {uncategorizedError && <Alert severity="error">{(uncategorizedError as Error).message}</Alert>}
+
+              {showUncategorized ? (
+                uncategorizedTransactions && <TransactionsTable transactions={uncategorizedTransactions} />
+              ) : (
+                transactions && <TransactionsTable transactions={transactions} />
+              )}
+
+              {!showUncategorized && !transactions && !isLoadingTransactions && (
+                <Typography color="text.secondary" align="center" sx={{ mt: 4 }}>
+                  Click a slice on the chart to view category transactions.
+                </Typography>
+              )}
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
     </Box>
   );
 };
