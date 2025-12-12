@@ -1,5 +1,5 @@
 @echo off
 echo Starting SmartSpender React Frontend...
-cd SmartSpender.WEB.React
+cd Frontend\SmartSpender.WEB.React
 npm run dev
 pause
