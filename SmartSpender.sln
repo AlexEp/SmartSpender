@@ -5,15 +5,15 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSpender.DAL.API", "SmartSpender.DAL.API\SmartSpender.DAL.API.csproj", "{F02C15B8-CF74-4B27-A6F0-4029403D9AFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSpender.DAL.BL", "SmartSpender.DAL.BL\SmartSpender.DAL.BL.csproj", "{FB896925-3686-431E-A497-D22558D0F04A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSpender.DAL.BL", "Backend\SmartSpender.DAL.BL\SmartSpender.DAL.BL.csproj", "{FB896925-3686-431E-A497-D22558D0F04A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSpender.DataCollector", "SmartSpender.BE\SmartSpender.DataCollector.csproj", "{635C0B73-D853-4865-88F0-BD1511C0F6F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSpender.DataCollector", "Backend\SmartSpender.BE\SmartSpender.DataCollector.csproj", "{635C0B73-D853-4865-88F0-BD1511C0F6F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSpender.UI", "SmartSpender.UI\SmartSpender.UI.csproj", "{F12E6260-BAAA-4F0C-A142-5C08425A5626}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSpender.UI", "Desktop\SmartSpender.UI\SmartSpender.UI.csproj", "{F12E6260-BAAA-4F0C-A142-5C08425A5626}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSpender.DAL.BL.Tests", "SmartSpender.DAL.BL.Tests\SmartSpender.DAL.BL.Tests.csproj", "{523F05FD-0741-4AB0-A35E-67E35724EEFD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSpender.DAL.BL.Tests", "Backend\SmartSpender.DAL.BL.Tests\SmartSpender.DAL.BL.Tests.csproj", "{523F05FD-0741-4AB0-A35E-67E35724EEFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSpender.Core", "SmartSpender.Core\SmartSpender.Core.csproj", "{FB5D0053-ACB0-4B46-B559-51B411EA11FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSpender.Core", "Shared\SmartSpender.Core\SmartSpender.Core.csproj", "{FB5D0053-ACB0-4B46-B559-51B411EA11FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
