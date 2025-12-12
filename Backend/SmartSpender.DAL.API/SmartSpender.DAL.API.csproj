@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Backend\SmartSpender.DAL.BL\SmartSpender.DAL.BL.csproj" />
+    <ProjectReference Include="..\SmartSpender.DAL.BL\SmartSpender.DAL.BL.csproj" />
   </ItemGroup>
 
 </Project>
