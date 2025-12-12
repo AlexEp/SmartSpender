@@ -10,13 +10,13 @@ The application allows users to manage their expenses by organizing them into bu
 
 ## Project Structure
 
-- **`SmartSpender.DAL.API`**: An ASP.NET Core Web API that exposes the application's functionality through a set of RESTful endpoints. (Located in root)
+- **`Backend/SmartSpender.DAL.API`**: An ASP.NET Core Web API that exposes the application's functionality through a set of RESTful endpoints.
 - **`Backend/SmartSpender.DAL.BL`**: A class library that contains the business logic of the application.
 - **`Shared/SmartSpender.Core`**: A class library that contains the core entities, DTOs, and interfaces.
 - **`Backend/SmartSpender.BE`**: A background worker service that performs data processing tasks.
 - **`Desktop/SmartSpender.UI`**: An Avalonia desktop application.
 - **`Frontend/AngularApp`** (formerly SmartSpender.WEB): An Angular single-page application that provides the user interface for the application.
-- **`SmartSpender.WEB.React`**: A React single-page application. (Located in root)
+- **`Frontend/SmartSpender.WEB.React`**: A React single-page application.
 
 # Building and Running
 
@@ -27,7 +27,7 @@ To work with this project, you need to have Node.js, the Angular CLI, and the .N
 To run the backend API, you can use the following command:
 
 ```bash
-dotnet run --project SmartSpender.DAL.API
+dotnet run --project Backend/SmartSpender.DAL.API
 ```
 
 The API will be available at `http://localhost:3010`.
@@ -52,7 +52,7 @@ This will start a local development server. You can view the application by navi
 
 ## Frontend (React)
 
-To run the frontend application, navigate to the `SmartSpender.WEB.React` directory and run the following commands:
+To run the frontend application, navigate to the `Frontend/SmartSpender.WEB.React` directory and run the following commands:
 
 **1. Install Dependencies:**
 

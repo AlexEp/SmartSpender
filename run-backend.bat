@@ -1,5 +1,5 @@
 @echo off
 echo Starting SmartSpender Backend API...
-cd SmartSpender.DAL.API
+cd Backend\SmartSpender.DAL.API
 dotnet run
 pause
