@@ -30,8 +30,9 @@
 - **Schema**: Auto-generated on first run.
 
 ### How to Run
-- **API**: `cd SmartSpender.DAL.API && dotnet run` (Port: 3010, Swagger: /swagger)
+- **API**: `cd SmartSpender.DAL.API && dotnet run` (Port: 3010, Swagger: /swagger) OR run `run-backend.bat`
 - **Web**: `cd SmartSpender.Web && npm install && npm start` (Port: 4200)
+- **Web (React)**: `cd SmartSpender.WEB.React && npm install && npm run dev` (Port: 5173) OR run `run-react-app.bat`
 - **Desktop UI**: `cd SmartSpender.UI && dotnet run`
 - **Data Collector**: `cd SmartSpender.BE && dotnet run`
 - **Tests**: `cd SmartSpender.DAL.BL.Tests && dotnet test`
